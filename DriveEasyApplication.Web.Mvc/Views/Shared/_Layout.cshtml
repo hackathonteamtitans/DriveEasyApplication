@@ -36,10 +36,10 @@
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href=@Url.Action("Index","Home") class="nav-link">Home</a>
+                    @*<a href=@Url.Action("Index","Home") class="nav-link">Home</a>*@
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href=@Url.Action("Index","User") class="nav-link">User Info</a>
+                    @*<a href=@Url.Action("Index","User") class="nav-link">User Info</a>*@
                 </li>
                 @*<li class="nav-item d-none d-sm-inline-block">
                         <a href="@Url.Action("ProjectDetails","Home")" class="nav-link">Project-wise Status</a>
@@ -118,38 +118,11 @@
                         <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
                     </div>
                 </li>
-                <!-- Notifications Dropdown Menu -->
-                <li class="nav-item dropdown">
-                    <a class="nav-link" data-toggle="dropdown" href="#">
-                        <i class="far fa-bell"></i>
-                        <span class="badge badge-warning navbar-badge">15</span>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                        <span class="dropdown-item dropdown-header">15 Notifications</span>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item">
-                            <i class="fas fa-envelope mr-2"></i> 4 new messages
-                            <span class="float-right text-muted text-sm">3 mins</span>
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item">
-                            <i class="fas fa-users mr-2"></i> 8 friend requests
-                            <span class="float-right text-muted text-sm">12 hours</span>
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item">
-                            <i class="fas fa-file mr-2"></i> 3 new reports
-                            <span class="float-right text-muted text-sm">2 days</span>
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
-                    </div>
-                </li>
-                <li class="nav-item">
+                @*<li class="nav-item">
                     <a class="nav-link btn-outline-primary" href=@Url.Action("Index","Login") role="button">
                         <i class="fas fa-th-large">Log Out</i>
                     </a>
-                </li>
+                </li>*@
             </ul>
         </nav>
         <!-- /.navbar -->
@@ -180,11 +153,25 @@
                         <!-- Add icons to the links using the .nav-icon class
                         with font-awesome or any other icon font library -->
                         <li class="nav-item has-treeview menu-open">
-                            <a href="#" class="nav-link active">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                           <a href=@Url.Action("Index","Home") class="nav-link active">
+                                <i class="nav-icon fab fa-buromobelexperte"></i>
                                 <p>
                                     Dashboard
-                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                        <li class="nav-item has-treeview menu-open">
+                            <a href="@Url.Action("Index","Drives")" class="nav-link">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>
+                                    Drives
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="@Url.Action("Index","Panels")" class="nav-link">
+                                <i class="nav-icon fas fa-users"></i>
+                                <p>
+                                    Panels
                                 </p>
                             </a>
                         </li>
@@ -196,7 +183,6 @@
         </aside>
 
         <div class="content-wrapper">
-
             <main role="main" class="content">
                 <div class="container-fluid">
                     @RenderBody()
@@ -219,7 +205,7 @@
         <!-- /.control-sidebar -->
     </div>
 
-    @*@RenderSection("Scripts", required: false)*@
+    @RenderSection("Scripts", required: false)
     <!-- jQuery -->
     <script src="../plugins/jquery/jquery.min.js"></script>
     <!-- jQuery UI 1.11.4 -->
@@ -248,11 +234,43 @@
     <script src="plugins/summernote/summernote-bs4.min.js"></script>
     <!-- overlayScrollbars -->
     <script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+    <!-- DataTables  & Plugins -->
+    <script src="../../plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="../../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="../../plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="../../plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <script src="../../plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="../../plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+    <script src="../../plugins/jszip/jszip.min.js"></script>
+    <script src="../../plugins/pdfmake/pdfmake.min.js"></script>
+    <script src="../../plugins/pdfmake/vfs_fonts.js"></script>
+    <script src="../../plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="../../plugins/datatables-buttons/js/buttons.print.min.js"></script>
+    <script src="../../plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
     <!-- AdminLTE App -->
     <script src="dist/js/adminlte.js"></script>
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script src="dist/js/pages/dashboard.js"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="dist/js/demo.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#example1").DataTable({
+                "responsive": true, "lengthChange": false, "autoWidth": false,
+                "buttons": ["copy", "csv", "excel", "pdf"]
+            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+            $("#example2").DataTable({
+                "responsive": true, "lengthChange": false, "autoWidth": false,
+                "buttons": ["copy", "csv", "excel", "pdf"]
+            }).buttons().container().appendTo('#example2_wrapper .col-md-6:eq(0)');
+            $("#example3").DataTable({
+                "responsive": true, "lengthChange": false, "autoWidth": false,
+                "buttons": ["copy", "csv", "excel", "pdf"]
+            }).buttons().container().appendTo('#example3_wrapper .col-md-6:eq(0)');
+        });
+
+        //Date and time picker
+        $('#reservationdatetime').datetimepicker({ icons: { time: 'far fa-clock' } });
+    </script>
 </body>
 </html>

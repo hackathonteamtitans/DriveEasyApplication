@@ -1,0 +1,222 @@
+﻿@{
+    ViewData["Title"] = "Drive Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h1>@ViewData["Title"]</h1>
+
+
+<!-- DataTables -->
+<link rel="stylesheet" href="../../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="../../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+<link rel="stylesheet" href="../../plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card card-primary">
+            <div class="card-header">
+                <h3 class="card-title"><i class="fal fa-cloud-upload"></i>Upload Drive Sheet</h3>
+            </div>
+            <!-- form start -->
+            <form>
+                <div class="card-body">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="exampleInputFile">
+                                <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                            </div>
+                            <div class="input-group-append">
+                                <span type="button" class="btn btn-primary float-right">Upload</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <table id="example2" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Candidate Name</th>
+                            <th>Skill Set</th>
+                            <th>Source</th>
+                            <th>Confirmed</th>
+                            <th>Contact</th>
+                            <th>Email</th>
+                            <th>Experience</th>
+                            <th>Notice Period</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Sharique Nadeem</td>
+                            <td>
+                                C#, .NET
+                            </td>
+                            <td>Referral</td>
+                            <td>Yes</td>
+                            <td>9011053276</td>
+                            <td>test1@gmail.com</td>
+                            <td>4</td>
+                            <td>60</td>
+                            <td><span class="badge badge-warning">No Show</span></td>
+                        </tr>
+                        <tr>
+                            <td>Sharique Nadeem</td>
+                            <td>
+                                C#, .NET
+                            </td>
+                            <td>Referral</td>
+                            <td>Yes</td>
+                            <td>9011053276</td>
+                            <td>test1@gmail.com</td>
+                            <td>4</td>
+                            <td>60</td>
+                            <td><span class="badge badge-success">Selected</span></td>
+                        </tr>
+                        <tr>
+                            <td>Sharique Nadeem</td>
+                            <td>
+                                C#, .NET
+                            </td>
+                            <td>Referral</td>
+                            <td>Yes</td>
+                            <td>9011053276</td>
+                            <td>test1@gmail.com</td>
+                            <td>4</td>
+                            <td>60</td>
+                            <td><span class="badge badge-danger">Rejected</span></td>
+                        </tr>
+                        <tr>
+                            <td>Sharique Nadeem</td>
+                            <td>
+                                C#, .NET
+                            </td>
+                            <td>Referral</td>
+                            <td>Yes</td>
+                            <td>9011053276</td>
+                            <td>test1@gmail.com</td>
+                            <td>4</td>
+                            <td>60</td>
+                            <td><span class="badge badge-info">In Progress</span></td>
+                        </tr>
+                        <tr>
+                            <td>Sharique Nadeem</td>
+                            <td>
+                                C#, .NET
+                            </td>
+                            <td>Referral</td>
+                            <td>Yes</td>
+                            <td>9011053276</td>
+                            <td>test1@gmail.com</td>
+                            <td>4</td>
+                            <td>60</td>
+                            <td><span class="badge badge-danger">Rejected</span></td>
+                        </tr>
+                        <tr>
+                            <td>Sharique Nadeem</td>
+                            <td>
+                                C#, .NET
+                            </td>
+                            <td>Referral</td>
+                            <td>Yes</td>
+                            <td>9011053276</td>
+                            <td>test1@gmail.com</td>
+                            <td>4</td>
+                            <td>60</td>
+                            <td><span class="badge badge-success">Selected</span></td>
+                        </tr>
+                        <tr>
+                            <td>Sharique Nadeem</td>
+                            <td>
+                                C#, .NET
+                            </td>
+                            <td>Referral</td>
+                            <td>Yes</td>
+                            <td>9011053276</td>
+                            <td>test1@gmail.com</td>
+                            <td>4</td>
+                            <td>60</td>
+                            <td><span class="badge badge-warning">No Show</span></td>
+                        </tr>
+                        <tr>
+                            <td>Sharique Nadeem</td>
+                            <td>
+                                C#, .NET
+                            </td>
+                            <td>Referral</td>
+                            <td>Yes</td>
+                            <td>9011053276</td>
+                            <td>test1@gmail.com</td>
+                            <td>4</td>
+                            <td>60</td>
+                            <td><span class="badge badge-danger">Rejected</span></td>
+                        </tr>
+                        <tr>
+                            <td>Sharique Nadeem</td>
+                            <td>
+                                C#, .NET
+                            </td>
+                            <td>Referral</td>
+                            <td>Yes</td>
+                            <td>9011053276</td>
+                            <td>test1@gmail.com</td>
+                            <td>4</td>
+                            <td>60</td>
+                            <td><span class="badge badge-success">Selected</span></td>
+                        </tr>
+                        <tr>
+                            <td>Sharique Nadeem</td>
+                            <td>
+                                C#, .NET
+                            </td>
+                            <td>Referral</td>
+                            <td>Yes</td>
+                            <td>9011053276</td>
+                            <td>test1@gmail.com</td>
+                            <td>4</td>
+                            <td>60</td>
+                            <td><span class="badge badge-success">Selected</span></td>
+                        </tr>
+                        <tr>
+                            <td>Sharique Nadeem</td>
+                            <td>
+                                C#, .NET
+                            </td>
+                            <td>Referral</td>
+                            <td>Yes</td>
+                            <td>9011053276</td>
+                            <td>test1@gmail.com</td>
+                            <td>4</td>
+                            <td>60</td>
+                            <td><span class="badge badge-info">In Progress</span></td>
+                        </tr>
+                        <tr>
+                            <td>Sharique Nadeem</td>
+                            <td>
+                                C#, .NET
+                            </td>
+                            <td>Referral</td>
+                            <td>Yes</td>
+                            <td>9011053276</td>
+                            <td>test1@gmail.com</td>
+                            <td>4</td>
+                            <td>60</td>
+                            <td><span class="badge badge-success">Selected</span></td>
+                        </tr>
+                    </tbody>                   
+                </table>
+            </div>
+            <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+    </div>
+    <!-- /.col -->
+</div>
