@@ -71,7 +71,6 @@ namespace DriveEasyApplication.Web.Mvc.Services
             }
         }
 
-  
         private static List<T> ConvertDataTable<T>(DataTable dt)
         {
             List<T> data = new List<T>();
@@ -100,6 +99,5 @@ namespace DriveEasyApplication.Web.Mvc.Services
             }
             return obj;
         }
-
     }
 }

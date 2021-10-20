@@ -8,6 +8,5 @@ namespace DriveEasyApplication.Web.Mvc.Services
         void Add<T>(T data);
 
         void Add<T>(IList<T> data);
-
     }
 }
