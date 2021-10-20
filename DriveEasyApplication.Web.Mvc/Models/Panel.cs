@@ -7,28 +7,33 @@ namespace DriveEasyApplication.Web.Mvc.Models
 {
     public class Panel
     {
-        public int? ID { get; set; }
+        public int PanelID { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
         public string MobileNumber { get; set; }
-        public int? EmployeeID { get; set; }
-        public List<string> Skills { get; set; }
+        public int EmployeeID { get; set; }
+        public string Skills { get; set; }
         public string Manager { get; set; }
-        public string Team { get; set; }
-        public PanelType? PanelType { get; set; }
-        public Decimal? Experience { get; set; }
+        public string Department { get; set; }
+        public PanelType PanelType { get; set; }
+        public string Experience { get; set; }
         public string Title { get; set; }
 
 
         public Dictionary<string, string> ToDictionary()
         {
             Dictionary<string, string> KeyValuePairs = new Dictionary<string, string>();
-            if (ID != null) KeyValuePairs.Add("ID", ID.ToString());
-            if (EmployeeID != null) KeyValuePairs.Add("EmployeeID", EmployeeID.ToString());
-            if (Skills != null) KeyValuePairs.Add("Skills", string.Join(",", Skills));
-            if (PanelType != null) KeyValuePairs.Add("PanelType", PanelType.ToString());
-            if (Experience != null) KeyValuePairs.Add("Experience", Experience.ToString());
-
+            KeyValuePairs.Add("PanelID", PanelID.ToString());
+            KeyValuePairs.Add("Name", Name);
+            KeyValuePairs.Add("Email", Email);
+            KeyValuePairs.Add("EmployeeID", EmployeeID.ToString());
+            KeyValuePairs.Add("Skills", Skills);
+            KeyValuePairs.Add("Manager", Manager);
+            KeyValuePairs.Add("Department", Department);
+            KeyValuePairs.Add("Manager", Manager);
+            KeyValuePairs.Add("PanelType", PanelType.ToString());
+            KeyValuePairs.Add("Experience", Experience);
+            KeyValuePairs.Add("Title", Title);
             return KeyValuePairs;
         }
     }
