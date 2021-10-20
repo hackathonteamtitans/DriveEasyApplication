@@ -2,11 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 
-namespace DriveEasyApplication.Web.Mvc.Repository
+namespace DriveEasyApplication.Web.Mvc.Services
 {
     public class EasyDriveDbServices : Sqlite, IEasyDriveDbService
     {
@@ -20,48 +18,57 @@ namespace DriveEasyApplication.Web.Mvc.Repository
 
         }
 
-        public void AddCandidate(Candidate candidate)
+        public void Add<T>(T data)
         {
-            InsertData(DbName, "Candidates", candidate.ToDictionary());
-        }
-
-        public void AddCandidates(IList<Candidate> candidates)
-        {
-            foreach (var candidate in candidates)
+            switch (data)
             {
-                AddCandidate(candidate);
+                case Candidate candidate:
+                    InsertData(DbName, "Candidates", candidate.ToDictionary());
+                    break;
+                case Drive drive:
+                    InsertData(DbName, "Drive", drive.ToDictionary());
+                    break;
+                case Panel panel:
+                    InsertData(DbName, "Panel", panel.ToDictionary());
+                    break;
+                case PanelAvailability panelAvailability:
+                    InsertData(DbName, "PanelAvailability", panelAvailability.ToDictionary());
+                    break;
             }
         }
 
-        public void AddPanelist(Panel panelist)
+        public void Add<T>(IList<T> data)
         {
-            throw new NotImplementedException();
-        }
+            switch (data)
+            {
+                case  List<Candidate> candidates:
+                    foreach (var candidate in candidates)
+                    {
+                        Add(candidate);
+                    }
+                    break;
 
-        public void AddPanelists(IList<Panel> panelists)
-        {
-            throw new NotImplementedException();
-        }
+                case List<Drive> drives:
+                    foreach (var drive in drives)
+                    {
+                        Add(drive);
+                    }
+                    break;
 
-        public void DeleteCandidate(string id)
-        {
-            throw new NotImplementedException();
-        }
+                case List<Panel> panels:
+                    foreach (var panel in panels)
+                    {
+                        Add(panel);
+                    }
+                    break;
 
-        public void DeletePanelist(string id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void UpdateCandidate(Candidate candidate)
-        {
-            throw new NotImplementedException();
-        }
-
-
-        public void UpdatePanelist(Panel panelist)
-        {
-            throw new NotImplementedException();
+                case List<PanelAvailability> panelAvailabilities:
+                    foreach (var panelAvailability in panelAvailabilities)
+                    {
+                        Add(panelAvailability);
+                    }
+                    break;
+            }
         }
 
         private static List<T> ConvertDataTable<T>(DataTable dt)

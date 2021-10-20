@@ -1,11 +1,11 @@
-﻿using Microsoft.Data.Sqlite;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.IO;
-
-namespace DriveEasyApplication.Web.Mvc.Repository
+﻿namespace DriveEasyApplication.Web.Mvc.Services
 {
+    using Microsoft.Data.Sqlite;
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.IO;
+
     /// <summary>
     /// This class will be used during the SQLite Db connection and DB creation with the required the test data.
     /// </summary>
@@ -48,7 +48,7 @@ namespace DriveEasyApplication.Web.Mvc.Repository
 
         public static int ExecuteNonQuerry(string dbName, string query)
         {
-            string dbPath = Directory.GetParent(System.Reflection.Assembly.GetExecutingAssembly().Location).Parent.Parent.FullName + $"\\resources\\Database\\{dbName}.sqlite";
+            string dbPath = Directory.GetParent(System.Reflection.Assembly.GetExecutingAssembly().Location).Parent.Parent.Parent.FullName + $"\\resources\\Database\\{dbName}.sqlite";
             if (!File.Exists(dbPath))
             {
                 throw new FileNotFoundException($"Unable to find  : -> {dbPath}");
@@ -99,7 +99,7 @@ namespace DriveEasyApplication.Web.Mvc.Repository
 
         public static void CreateDbFile(string dbName)
         {
-            string dBFilePath = Directory.GetParent(System.Reflection.Assembly.GetExecutingAssembly().Location).Parent.Parent.FullName + $"\\resources\\Database\\{dbName}.sqlite";
+            string dBFilePath = Directory.GetParent(System.Reflection.Assembly.GetExecutingAssembly().Location).Parent.Parent.Parent.FullName + $"\\resources\\Database\\{dbName}.sqlite";
             try
             {
                 if (!File.Exists(dBFilePath))

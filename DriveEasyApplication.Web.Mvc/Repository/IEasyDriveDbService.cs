@@ -1,27 +1,12 @@
 ﻿using DriveEasyApplication.Web.Mvc.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace DriveEasyApplication.Web.Mvc.Repository
+namespace DriveEasyApplication.Web.Mvc.Services
 {
     interface IEasyDriveDbService
     {
-        void AddCandidate(Candidate candidate);
+        void Add<T>(T data);
 
-        void AddPanelist(Panel panelist);
-
-        void AddCandidates(IList<Candidate> candidates);
-
-        void AddPanelists(IList<Panel> panelists);
-
-        void DeleteCandidate(string id);
-
-        void DeletePanelist(string id);
-
-        void UpdateCandidate(Candidate candidate);
-
-        void UpdatePanelist(Panel panelist);
+        void Add<T>(IList<T> data);
     }
 }
