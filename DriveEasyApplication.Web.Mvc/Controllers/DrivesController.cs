@@ -11,10 +11,15 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
     {
         public IActionResult Index()
         {
-            GetDriveData();
+            //GetDriveData();
             return View();
         }
-        public IActionResult CandidateDetails()
+        public IActionResult DrivesDetails()
+        {
+            return View();
+        }
+
+        public IActionResult CandidateDetails(int driveId)
         {
             return View();
         }

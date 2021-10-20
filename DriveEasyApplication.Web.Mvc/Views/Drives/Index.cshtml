@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "Drive Details";
+    ViewData["Title"] = "Scheduled Drive(s)";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <h1>@ViewData["Title"]</h1>
@@ -11,205 +11,130 @@
 <link rel="stylesheet" href="../../plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
 
 <div class="row">
-    <div class="col-md-12">
-        <div class="card card-primary">
-            <div class="card-header">
-                <h3 class="card-title"><i class="fas fa-cloud-download-alt"></i>Upload Drive Sheet</h3>
-            </div>
-            <!-- form start -->
-            <form>
-                <div class="card-body">
-                    <div class="form-group">
-                        <div class="input-group">
-                            <div class="custom-file">
-                                <input type="file" class="custom-file-input" id="exampleInputFile">
-                                <label class="custom-file-label" for="exampleInputFile">Choose file</label>
-                            </div>
-                            <div class="input-group-append">
-                                <span type="button" class="btn btn-primary float-right">Upload</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-<div class="row">
     <div class="col-12">
         <div class="card">
+            <div class="card-header clearfix">
+                <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#modal-lg"><i class="fas fa-plus"></i> Create Drive(s)</button>
+            </div>
+            <!-- /.card-header -->
             <div class="card-body">
                 <table id="example2" class="table table-bordered table-striped">
                     <thead>
                         <tr>
-                            <th>Candidate Name</th>
-                            <th>Skill Set</th>
-                            <th>Source</th>
-                            <th>Confirmed</th>
-                            <th>Contact</th>
-                            <th>Email</th>
-                            <th>Experience</th>
-                            <th>Notice Period</th>
+                            <th>Drive Name</th>
+                            <th>Date</th>
+                            <th>Department</th>
+                            <th>Organizer</th>
+                            <th>Drive Start-Drive End</th>
+                            <th>Break Start-Break End</th>
                             <th>Status</th>
+                            <th style="width: 20%">Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td><a href="@Url.Action("CandidateDetails","Drives")">Sharique Nadeem</a></td>
-                            <td>
-                                C#, .NET
+                            <td>Drive1</td>
+                            <td>19/10/2021</td>
+                            <td>Merchant</td>
+                            <td>Sneha</td>
+                            <td>10:00 AM-6:00 PM</td>
+                            <td>1:00 PM-2:00 PM</td>
+                            <td><span class="badge badge-info">In progress</span></td>
+                            <td class="project-actions text-right">
+                                <a class="btn btn-primary btn-sm" href="@Url.Action("DrivesDetails","Drives")">
+                                    <i class="fas fa-folder">
+                                    </i>
+                                    View
+                                </a>
+                                <a class="btn btn-info btn-sm" href="#">
+                                    <i class="fas fa-pencil-alt">
+                                    </i>
+                                    Edit
+                                </a>
+                                <a class="btn btn-danger btn-sm" href="#">
+                                    <i class="fas fa-trash">
+                                    </i>
+                                    Delete
+                                </a>
                             </td>
-                            <td>Referral</td>
-                            <td>Yes</td>
-                            <td>9011053276</td>
-                            <td>test1@gmail.com</td>
-                            <td>4</td>
-                            <td>60</td>
-                            <td><span class="badge badge-warning">No Show</span></td>
                         </tr>
                         <tr>
-                            <td><a href="@Url.Action("CandidateDetails","Drives")">Sharique Nadeem</a></td>
-                            <td>
-                                C#, .NET
+                            <td>Drive2</td>
+                            <td>19/10/2021</td>
+                            <td>Merchant</td>
+                            <td>Sneha</td>
+                            <td>10:00 AM-6:00 PM</td>
+                            <td>1:00 PM-2:00 PM</td>
+                            <td><span class="badge badge-info">In progress</span></td>
+                            <td class="project-actions text-right">
+                                <a class="btn btn-primary btn-sm" href="@Url.Action("DrivesDetails","Drives")">
+                                    <i class="fas fa-folder">
+                                    </i>
+                                    View
+                                </a>
+                                <a class="btn btn-info btn-sm" href="#">
+                                    <i class="fas fa-pencil-alt">
+                                    </i>
+                                    Edit
+                                </a>
+                                <a class="btn btn-danger btn-sm" href="#">
+                                    <i class="fas fa-trash">
+                                    </i>
+                                    Delete
+                                </a>
                             </td>
-                            <td>Referral</td>
-                            <td>Yes</td>
-                            <td>9011053276</td>
-                            <td>test1@gmail.com</td>
-                            <td>4</td>
-                            <td>60</td>
-                            <td><span class="badge badge-success">Selected</span></td>
                         </tr>
                         <tr>
-                            <td><a href="@Url.Action("CandidateDetails","Drives")">Sharique Nadeem</a></td>
-                            <td>
-                                C#, .NET
+                            <td>Drive3</td>
+                            <td>19/10/2021</td>
+                            <td>Merchant</td>
+                            <td>Sneha</td>
+                            <td>10:00 AM-6:00 PM</td>
+                            <td>1:00 PM-2:00 PM</td>
+                            <td><span class="badge badge-success">Completed</span></td>
+                            <td class="project-actions text-right">
+                                <a class="btn btn-primary btn-sm" href="@Url.Action("DrivesDetails","Drives")">
+                                    <i class="fas fa-folder">
+                                    </i>
+                                    View
+                                </a>
+                                <a class="btn btn-info btn-sm" href="#">
+                                    <i class="fas fa-pencil-alt">
+                                    </i>
+                                    Edit
+                                </a>
+                                <a class="btn btn-danger btn-sm" href="#">
+                                    <i class="fas fa-trash">
+                                    </i>
+                                    Delete
+                                </a>
                             </td>
-                            <td>Referral</td>
-                            <td>Yes</td>
-                            <td>9011053276</td>
-                            <td>test1@gmail.com</td>
-                            <td>4</td>
-                            <td>60</td>
-                            <td><span class="badge badge-danger">Rejected</span></td>
                         </tr>
                         <tr>
-                            <td><a href="@Url.Action("CandidateDetails","Drives")">Sharique Nadeem</a></td>
-                            <td>
-                                C#, .NET
+                            <td>Drive4</td>
+                            <td>19/10/2021</td>
+                            <td>Merchant</td>
+                            <td>Sneha</td>
+                            <td>10:00 AM-6:00 PM</td>
+                            <td>1:00 PM-2:00 PM</td>
+                            <td><span class="badge badge-warning">Not Started</span></td>
+                            <td class="project-actions text-right">
+                                <a class="btn btn-primary btn-sm" href="@Url.Action("DrivesDetails","Drives")">
+                                    <i class="fas fa-folder">
+                                    </i>
+                                    View
+                                </a>
+                                <a class="btn btn-info btn-sm" href="#">
+                                    <i class="fas fa-pencil-alt">
+                                    </i>
+                                    Edit
+                                </a>
+                                <a class="btn btn-danger btn-sm" href="#">
+                                    <i class="fas fa-trash">
+                                    </i>
+                                    Delete
+                                </a>
                             </td>
-                            <td>Referral</td>
-                            <td>Yes</td>
-                            <td>9011053276</td>
-                            <td>test1@gmail.com</td>
-                            <td>4</td>
-                            <td>60</td>
-                            <td><span class="badge badge-info">In Progress</span></td>
-                        </tr>
-                        <tr>
-                            <td><a href="@Url.Action("CandidateDetails","Drives")">Sharique Nadeem</a></td>
-                            <td>
-                                C#, .NET
-                            </td>
-                            <td>Referral</td>
-                            <td>Yes</td>
-                            <td>9011053276</td>
-                            <td>test1@gmail.com</td>
-                            <td>4</td>
-                            <td>60</td>
-                            <td><span class="badge badge-danger">Rejected</span></td>
-                        </tr>
-                        <tr>
-                            <td><a href="@Url.Action("CandidateDetails","Drives")">Sharique Nadeem</a></td>
-                            <td>
-                                C#, .NET
-                            </td>
-                            <td>Referral</td>
-                            <td>Yes</td>
-                            <td>9011053276</td>
-                            <td>test1@gmail.com</td>
-                            <td>4</td>
-                            <td>60</td>
-                            <td><span class="badge badge-success">Selected</span></td>
-                        </tr>
-                        <tr>
-                            <td><a href="@Url.Action("CandidateDetails","Drives")">Sharique Nadeem</a></td>
-                            <td>
-                                C#, .NET
-                            </td>
-                            <td>Referral</td>
-                            <td>Yes</td>
-                            <td>9011053276</td>
-                            <td>test1@gmail.com</td>
-                            <td>4</td>
-                            <td>60</td>
-                            <td><span class="badge badge-warning">No Show</span></td>
-                        </tr>
-                        <tr>
-                            <td><a href="@Url.Action("CandidateDetails","Drives")">Sharique Nadeem</a></td>
-                            <td>
-                                C#, .NET
-                            </td>
-                            <td>Referral</td>
-                            <td>Yes</td>
-                            <td>9011053276</td>
-                            <td>test1@gmail.com</td>
-                            <td>4</td>
-                            <td>60</td>
-                            <td><span class="badge badge-danger">Rejected</span></td>
-                        </tr>
-                        <tr>
-                            <td><a href="@Url.Action("CandidateDetails","Drives")">Sharique Nadeem</a></td>
-                            <td>
-                                C#, .NET
-                            </td>
-                            <td>Referral</td>
-                            <td>Yes</td>
-                            <td>9011053276</td>
-                            <td>test1@gmail.com</td>
-                            <td>4</td>
-                            <td>60</td>
-                            <td><span class="badge badge-success">Selected</span></td>
-                        </tr>
-                        <tr>
-                            <td><a href="@Url.Action("CandidateDetails","Drives")">Sharique Nadeem</a></td>
-                            <td>
-                                C#, .NET
-                            </td>
-                            <td>Referral</td>
-                            <td>Yes</td>
-                            <td>9011053276</td>
-                            <td>test1@gmail.com</td>
-                            <td>4</td>
-                            <td>60</td>
-                            <td><span class="badge badge-success">Selected</span></td>
-                        </tr>
-                        <tr>
-                            <td><a href="@Url.Action("CandidateDetails","Drives")">Sharique Nadeem</a></td>
-                            <td>
-                                C#, .NET
-                            </td>
-                            <td>Referral</td>
-                            <td>Yes</td>
-                            <td>9011053276</td>
-                            <td>test1@gmail.com</td>
-                            <td>4</td>
-                            <td>60</td>
-                            <td><span class="badge badge-info">In Progress</span></td>
-                        </tr>
-                        <tr>
-                            <td><a href="@Url.Action("CandidateDetails","Drives")">Sharique Nadeem</a></td>
-                            <td>
-                                C#, .NET
-                            </td>
-                            <td>Referral</td>
-                            <td>Yes</td>
-                            <td>9011053276</td>
-                            <td>test1@gmail.com</td>
-                            <td>4</td>
-                            <td>60</td>
-                            <td><span class="badge badge-success">Selected</span></td>
                         </tr>
                     </tbody>
                 </table>
@@ -221,13 +146,125 @@
     <!-- /.col -->
 </div>
 
+
+<div class="modal fade" id="modal-lg">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Drive</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card card-primary">
+                            <div class="card-header">
+                                <h3 class="card-title">Information</h3>
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label for="inputName">Drive Name</label>
+                                    <input type="text" id="inputName" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputOrganizer">Organizer</label>
+                                    <input type="text" id="inputOrganizer" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputDepartment">Department</label>
+                                    <input type="text" id="inputDepartment" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputdate">Date</label>
+                                    <div class="input-group date" id="reservationdate" data-target-input="nearest">
+                                        <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate" />
+                                        <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
+                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputDriveStart">Drive Start</label>
+                                    <div class="input-group date" id="reservationdatetime1" data-target-input="nearest">
+                                        <input type="text" class="form-control datetimepicker-input" data-target="#reservationdatetime1" />
+                                        <div class="input-group-append" data-target="#reservationdatetime1" data-toggle="datetimepicker">
+                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                        </div>
+                                    </div>
+                                </div>                            
+                                <div class="form-group">
+                                    <label for="inputDriveEnd">Drive End</label>
+                                    <div class="input-group date" id="reservationdatetime2" data-target-input="nearest">
+                                        <input type="text" class="form-control datetimepicker-input" data-target="#reservationdatetime2" />
+                                        <div class="input-group-append" data-target="#reservationdatetime2" data-toggle="datetimepicker">
+                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputBreakStart">Break Start</label>
+                                    <div class="input-group date" id="reservationdatetime3" data-target-input="nearest">
+                                        <input type="text" class="form-control datetimepicker-input" data-target="#reservationdatetime3" />
+                                        <div class="input-group-append" data-target="#reservationdatetime3" data-toggle="datetimepicker">
+                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputBreakEnd">Break End</label>
+                                    <div class="input-group date" id="reservationdatetime4" data-target-input="nearest">
+                                        <input type="text" class="form-control datetimepicker-input" data-target="#reservationdatetime4" />
+                                        <div class="input-group-append" data-target="#reservationdatetime4" data-toggle="datetimepicker">
+                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputStatus">Status</label>
+                                    <select id="inputStatus" class="form-control custom-select">
+                                        <option selected disabled>Select one</option>
+                                        <option>Not Started</option>
+                                        <option>In Progress</option>
+                                        <option>Completed</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
 @section scripts{
     <script>
-    $(document).ready(function () {
+        $(document).ready(function () {
             $("#example2").DataTable({
                 "responsive": true, "lengthChange": false, "autoWidth": false,
                 "buttons": ["copy", "csv", "excel", "pdf"]
             }).buttons().container().appendTo('#example2_wrapper .col-md-6:eq(0)');
+
+            $('#reservationdatetime1, #reservationdatetime2,#reservationdatetime3,#reservationdatetime4').datetimepicker({ icons: { time: 'far fa-clock' } });
+            //Date picker
+            $('#reservationdate').datetimepicker({
+                format: 'L'
+            });
         })
     </script>
 }
