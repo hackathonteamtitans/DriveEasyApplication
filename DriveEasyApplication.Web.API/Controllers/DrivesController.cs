@@ -35,7 +35,7 @@ namespace DriveEasyApplication.Web.API.Controllers
                 // automatically when the authorization flow completes for the first time.
                 string credPath = "token.json";
                 credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
-                    GoogleClientSecrets.Load(stream).Secrets,
+                    GoogleClientSecrets.FromStream(stream).Secrets,
                     Scopes,
                     "user",
                     CancellationToken.None,
