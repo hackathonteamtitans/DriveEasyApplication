@@ -7,6 +7,7 @@ namespace DriveEasyApplication.Web.Mvc.Models
 {
     public class Candidate
     {
+        public int SrNo { get; set; }
         public int CandidateID { get; set; }
         public string Name { get; set; }
         public string MobileNumber { get; set; }
@@ -28,6 +29,8 @@ namespace DriveEasyApplication.Web.Mvc.Models
         public string FeedbackForm { get; set; }
         public string ResumeLink { get; set; }
         public string Email { get; set; }
+        public DateTime? FromTime { get; set; }
+        public DateTime? ToTime { get; set; }
 
 
         public Dictionary<string, string> ToDictionary()
