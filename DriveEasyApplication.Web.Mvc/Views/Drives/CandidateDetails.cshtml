@@ -1,0 +1,135 @@
+﻿@{
+    ViewData["Title"] = "Candidate Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h1>@ViewData["Title"]</h1>
+
+
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card card-primary">
+            <div class="card-header">
+                <h3 class="card-title">Basic Information</h3>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="form-group">
+                    <label for="inputName">Candidate Name</label>
+                    <input type="text" id="inputName" class="form-control" value="Sharique Nadeem">
+                </div>
+                <div class="form-group">
+                    <label for="inputContact">Contact</label>
+                    <input type="text" id="inputContact" class="form-control" value="9011053276">
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail">Email</label>
+                    <input type="text" id="inputEmail" class="form-control" value="test@gmail.com">
+                </div>
+                <div class="form-group">
+                    <label for="inputDescription">Skill Set</label>
+                    <textarea id="inputDescription" class="form-control" rows="4">C#, Angular, Api, Core</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="inputSource">Source</label>
+                    <input type="text" id="inputSource" class="form-control" value="Referral">
+                </div>
+                <div class="form-group">
+                    <label for="inputClientCompany">Company</label>
+                    <input type="text" id="inputClientCompany" class="form-control" value="Deveint Inc">
+                </div>
+            </div>
+            <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+    </div>
+    <div class="col-md-6">
+        <div class="card card-secondary">
+            <div class="card-header">
+                <h3 class="card-title">Project</h3>
+
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="form-group">
+                    <label for="inputExperience">Year of Experience</label>
+                    <input type="number" id="inputExperience" class="form-control" value="1">
+                </div>
+                <div class="form-group">
+                    <label for="inputNoticePeriod">Notice Period</label>
+                    <input type="number" id="inputNoticePeriod" class="form-control" value="60">
+                </div>
+                <div class="form-group">
+                    <label for="inputStatus">Interview Status</label>
+                    <select id="inputStatus" class="form-control custom-select">
+                        <option disabled>Select one</option>
+                        <option>No Show</option>
+                        <option>Selected</option>
+                        <option>Rejected</option>
+                        <option>In Progress</option>
+                        <option selected>Scheduled</option>
+                    </select>
+                </div>
+            </div>
+            <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+        <div class="card card-info">
+            <div class="card-header">
+                <h3 class="card-title">Documents</h3>
+
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body p-0">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>File Name</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr>
+                            <td>Resume.docx</td>
+                            <td class="text-right py-0 align-middle">
+                                <div class="btn-group btn-group-sm">
+                                    <a href="#" class="btn btn-primary"><i class="fas fa-download"></i></a>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>CandidateEvaluation.docx</td>
+                            <td class="text-right py-0 align-middle">
+                                <div class="btn-group btn-group-sm">
+                                    <a href="~/images/Candidate_Evalaution_Form.doc" download" class="btn btn-info"><i class="fas fa-eye"></i>Sample Template</a>
+                                    <a href="#" class="btn btn-danger"><i class="fas fa-upload"></i></a>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <a href="#" class="btn btn-secondary">Cancel</a>
+        <input type="submit" value="Save Changes" class="btn btn-success float-right">
+    </div>
+</div>

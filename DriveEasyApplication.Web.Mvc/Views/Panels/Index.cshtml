@@ -439,7 +439,7 @@
                             <td>-</td>
                             <td>U</td>
                         </tr>
-                    </tbody>                    
+                    </tbody>
                 </table>
             </div>
             <!-- /.card-body -->
@@ -488,7 +488,7 @@
                                     <textarea id="inputDescription" class="form-control" rows="4"></textarea>
                                 </div>
                                 <div class="form-group">
-                                    <label for="inputStatus">Available From</label>
+                                    <label for="inputFromStatus">Available From</label>
                                     <div class="input-group date" id="reservationdatetime" data-target-input="nearest">
                                         <input type="text" class="form-control datetimepicker-input" data-target="#reservationdatetime" />
                                         <div class="input-group-append" data-target="#reservationdatetime" data-toggle="datetimepicker">
@@ -497,7 +497,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="inputStatus">Available To</label>
+                                    <label for="inputTillStatus">Available Till</label>
                                     <div class="input-group date" id="reservationdatetime" data-target-input="nearest">
                                         <input type="text" class="form-control datetimepicker-input" data-target="#reservationdatetime" />
                                         <div class="input-group-append" data-target="#reservationdatetime" data-toggle="datetimepicker">
@@ -529,3 +529,16 @@
     </div>
     <!-- /.modal-dialog -->
 </div>
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $("#example3").DataTable({
+                "responsive": true, "lengthChange": false, "autoWidth": false,
+                "buttons": ["copy", "csv", "excel", "pdf"]
+            }).buttons().container().appendTo('#example3_wrapper .col-md-6:eq(0)');
+
+            $('#reservationdatetime').datetimepicker({ icons: { time: 'far fa-clock' } });
+        })
+    </script>
+}
