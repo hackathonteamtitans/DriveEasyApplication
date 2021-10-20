@@ -212,6 +212,8 @@
     <Compile Include="Models\Panel.cs" />
     <Compile Include="Models\PanelAvailability.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Sqlite\EasyDriveDbServices.cs" />
+    <Compile Include="Sqlite\IEasyDriveDbService.cs" />
     <Compile Include="Sqlite\Sqlite.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -244,8 +246,8 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\CollectionModelDescription.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
-    <Content Include="resources\Database\EasyDrive.sqlite" />
     <Content Include="credentials.json" />
+    <Content Include="resources\Database\EasyDrive.sqlite" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

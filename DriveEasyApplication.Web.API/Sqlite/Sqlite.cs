@@ -13,8 +13,10 @@
     {
         private SqliteConnection connection;
 
+        protected string DbName;
         public Sqlite(string dbName)
         {
+            DbName = dbName;
             string dbPath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + $"\\resources\\Database\\{dbName}.sqlite";
             if (!File.Exists(dbPath))
             {
