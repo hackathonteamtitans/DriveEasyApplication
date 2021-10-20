@@ -21,9 +21,9 @@ namespace DriveEasyApplication.Web.API.Controllers
         static string[] Scopes = { SheetsService.Scope.SpreadsheetsReadonly };
         static string ApplicationName = "Interview Drive Google Sheets";
         // GET: Drives
-        public IEnumerable<InterviewData> Get()
+        public IEnumerable<Candidate> Get()
         {
-            List<InterviewData> InterviewDatas = new List<InterviewData>();
+            List<Candidate> Candidates = new List<Candidate>();
 
             UserCredential credential;
 
@@ -60,21 +60,21 @@ namespace DriveEasyApplication.Web.API.Controllers
             // https://docs.google.com/spreadsheets/d/1_T-8hgakOdeWE0xCMCYwNvDuSGvPWPb16jPic2ZvXhA/edit
             ValueRange response = request.Execute();
             IList<IList<Object>> values = response.Values;
-            List<InterviewData> data = new List<InterviewData>();
+            List<Candidate> data = new List<Candidate>();
             CultureInfo culture = new CultureInfo("en-US");
             if (values != null && values.Count > 0)
             {
                 foreach (var row in values)
                 {
                     // Print columns
-                    data.Add(new InterviewData
+                    data.Add(new Candidate
                     {
-                        SrNo = row[0] != null ? Convert.ToInt16(row[0]) : 0,
+                        ID = row[0] != null ? Convert.ToInt16(row[0]) : 0,
                         Name = row[1] != null ? row[1].ToString() : string.Empty,
-                        SkillSet = row[2] != null ? row[2].ToString().Split(',').ToList() : null,
+                        Skills = row[2] != null ? row[2].ToString().Split(',').ToList() : null,
                         Source = row[3] != null ? row[3].ToString() : string.Empty,
-                        Show = row[4] != null && row[4].ToString() == "Yes" ? Show.Yes : Show.No,
-                        Contact = row[5] != null ? row[5].ToString() : string.Empty,
+                        Confirmed = row[4] != null && row[4].ToString() == "Yes" ? Show.Yes : Show.No,
+                        MobileNumber = row[5] != null ? row[5].ToString() : string.Empty,
                         Email = row[6] != null ? row[6].ToString() : string.Empty,
                         Experience = row[7] != null ? Convert.ToDecimal(row[7]) : 0,
                         NoticePeriod = row[8] != null ? Convert.ToInt16(row[8]) : 0,
@@ -83,15 +83,15 @@ namespace DriveEasyApplication.Web.API.Controllers
                     });
                 }
 
-                InterviewDatas = data;
+                Candidates = data;
             }
             else
             {
 
-                InterviewDatas = null;
+                Candidates = null;
             }
 
-            return InterviewDatas;
+            return Candidates;
         }
     }
 }

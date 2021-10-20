@@ -22,43 +22,28 @@ namespace DriveEasyApplication.Web.API.Sqlite
 
         public void AddCandidate(Candidate candidate)
         {
-            throw new NotImplementedException();
+            InsertData(DbName, "Candidates", candidate.ToDictionary());
         }
 
         public void AddCandidates(IList<Candidate> candidates)
         {
-            throw new NotImplementedException();
-        }
-
-        public void AddInterviewData(InterviewData interviewData)
-        {
-            InsertData(DbName, "InterviewData", interviewData.ToDictionary());
-        }
-
-        public void AddInterviewDataList(List<InterviewData> interviewDataList)
-        {
-            foreach (var interviewData in interviewDataList)
+            foreach (var candidate in candidates)
             {
-                AddInterviewData(interviewData);
+                AddCandidate(candidate);
             }
         }
 
-        public void AddPanelist(Panelist panelist)
+        public void AddPanelist(Panel panelist)
         {
             throw new NotImplementedException();
         }
 
-        public void AddPanelists(IList<Panelist> panelists)
+        public void AddPanelists(IList<Panel> panelists)
         {
             throw new NotImplementedException();
         }
 
         public void DeleteCandidate(string id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteInterviewData(string id)
         {
             throw new NotImplementedException();
         }
@@ -73,12 +58,8 @@ namespace DriveEasyApplication.Web.API.Sqlite
             throw new NotImplementedException();
         }
 
-        public void UpdateInterviewData(InterviewData interviewData)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void UpdatePanelist(Panelist panelist)
+  
+        public void UpdatePanelist(Panel panelist)
         {
             throw new NotImplementedException();
         }

@@ -11,11 +11,11 @@ namespace DriveEasyApplication.Web.API.Sqlite
     {
         void AddCandidate(Candidate candidate);
 
-        void AddPanelist(Panelist panelist);
+        void AddPanelist(Panel panelist);
 
         void AddCandidates(IList<Candidate> candidates);
 
-        void AddPanelists(IList<Panelist> panelists);
+        void AddPanelists(IList<Panel> panelists);
 
         void DeleteCandidate(string id);
 
@@ -23,14 +23,7 @@ namespace DriveEasyApplication.Web.API.Sqlite
 
         void UpdateCandidate(Candidate candidate);
 
-        void UpdatePanelist(Panelist panelist);
+        void UpdatePanelist(Panel panelist);
 
-        void AddInterviewData(InterviewData interviewData);
-
-        void AddInterviewDataList(List<InterviewData> interviewDataList);
-
-        void UpdateInterviewData(InterviewData interviewData);
-
-        void DeleteInterviewData(string id);
     }
 }
