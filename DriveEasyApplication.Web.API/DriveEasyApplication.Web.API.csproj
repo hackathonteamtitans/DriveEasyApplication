@@ -211,6 +211,8 @@
     <Compile Include="Models\InterviewData.cs" />
     <Compile Include="Models\Panelist.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Sqlite\EasyDriveDbServices.cs" />
+    <Compile Include="Sqlite\IEasyDriveDbService.cs" />
     <Compile Include="Sqlite\Sqlite.cs" />
   </ItemGroup>
   <ItemGroup>
