@@ -11,6 +11,7 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
     {
         public IActionResult Index()
         {
+            GetDriveData();
             return View();
         }
         public IActionResult CandidateDetails()
@@ -18,29 +19,22 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
             return View();
         }
 
-        private void hhh()
+        private void GetDriveData()
         {
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri("https://localhost:44356/api/");
                 //HTTP GET
-                var responseTask = client.GetAsync("Values");
+                var responseTask = client.GetAsync("Drives");
                 responseTask.Wait();
 
                 var result = responseTask.Result;
                 if (result.IsSuccessStatusCode)
                 {
-                    //var readTask = result.Content.ReadAsAsync<IList<StudentViewModel>>();
-                    //readTask.Wait();
-
-                    //students = readTask.Result;
+                   
                 }
-                else //web api sent error response 
+                else 
                 {
-                    //log response status here..
-
-                    //students = Enumerable.Empty<StudentViewModel>();
-
                     ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
                 }
             }
