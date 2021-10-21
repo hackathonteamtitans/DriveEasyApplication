@@ -247,7 +247,9 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
             };
             try
             {
-                var k = _easyDriveDbService.GetPanel("PanelID", "1");
+                Panel panel = _easyDriveDbService.GetPanel("PanelID", "1").First();
+                panel.Name = "TestingJAck";
+                _easyDriveDbService.Edit<Panel>(panel, "PanelID", panel.PanelID.ToString());
             }
             catch (Exception ex)
             {

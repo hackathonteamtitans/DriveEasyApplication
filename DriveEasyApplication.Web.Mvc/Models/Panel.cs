@@ -8,6 +8,7 @@ namespace DriveEasyApplication.Web.Mvc.Models
 {
     public class Panel
     {
+        public Panel() { }
         public Panel(DataRow dataRow)
         {
             PanelID = Convert.ToInt32(dataRow["PanelID"]);
@@ -46,7 +47,7 @@ namespace DriveEasyApplication.Web.Mvc.Models
             KeyValuePairs.Add("Skills", Skills);
             KeyValuePairs.Add("Manager", Manager);
             KeyValuePairs.Add("Department", Department);
-            KeyValuePairs.Add("Manager", Manager);
+            KeyValuePairs.Add("MobileNumber", MobileNumber);
             KeyValuePairs.Add("PanelType", PanelType.ToString());
             KeyValuePairs.Add("Experience", Experience);
             KeyValuePairs.Add("Title", Title);

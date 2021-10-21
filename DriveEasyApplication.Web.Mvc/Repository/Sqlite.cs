@@ -104,6 +104,18 @@
             return ExecuteScalar(dbName, $"INSERT INTO {tableName} ({columns.TrimEnd(',')}) VALUES({values.TrimEnd(',')}); SELECT last_insert_rowid();");
         }
 
+        public static long UpdateData(string dbName, string tableName, string colName, string colValue, Dictionary<string, object> columNamesValues)
+        {
+            string columnsAndValues = string.Empty;
+
+            foreach (KeyValuePair<string, object> columnNameValue in columNamesValues)
+            {
+                columnsAndValues += $"{columnNameValue.Key} = '{columnNameValue.Value}',";
+            }
+
+            return ExecuteScalar(dbName, $"UPDATE {tableName} SET {columnsAndValues.TrimEnd(',')} WHERE {colName}='{colValue}';SELECT last_insert_rowid();");
+        }
+
         public DataTable ReadTable(string tableName)
         {
             return ExecuteQuerry($"SELECT * FROM {tableName}");
