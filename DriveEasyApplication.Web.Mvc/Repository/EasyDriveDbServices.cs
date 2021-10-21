@@ -126,9 +126,24 @@ namespace DriveEasyApplication.Web.Mvc.Services
             throw new NotImplementedException();
         }
 
-        public void Edit<T>(T data)
+        public void Edit<T>(T data, string colName, string value)
         {
-            throw new NotImplementedException();
+
+            switch (data)
+            {
+                case Candidate candidate:
+                    UpdateData(DbName, "Candidate", colName, value, candidate.ToDictionary());
+                    break;
+                case Drive drive:
+                    UpdateData(DbName, "Drive", colName, value, drive.ToDictionary());
+                    break;
+                case Panel panel:
+                    UpdateData(DbName, "Panel", colName, value, panel.ToDictionary());
+                    break;
+                case PanelAvailability panelAvailability:
+                    UpdateData(DbName, "PanelAvailability", colName, value, panelAvailability.ToDictionary());
+                    break;
+            }
         }
     }
 }

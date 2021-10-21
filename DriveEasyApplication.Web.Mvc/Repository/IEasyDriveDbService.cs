@@ -9,7 +9,7 @@ namespace DriveEasyApplication.Web.Mvc.Services
 
         void Add<T>(IList<T> data);
 
-        void Edit<T>(T data);
+        void Edit<T>(T data, string colName, string value);
 
         void Delete<T>(string id);
 
