@@ -5,7 +5,7 @@ namespace DriveEasyApplication.Web.Mvc.Services
 {
     public interface IEasyDriveDbService
     {
-        void Add<T>(T data);
+        long? Add<T>(T data);
 
         void Add<T>(IList<T> data);
 

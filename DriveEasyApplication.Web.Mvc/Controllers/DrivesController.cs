@@ -113,7 +113,9 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
 
         public IActionResult CandidateDetails(int driveId)
         {
-            return View();
+            // Read data from database
+            IEnumerable<Candidate> dbCandidates = null;
+            return View(dbCandidates);
         }
 
         public IActionResult SendInvites(int driveId) 
@@ -124,6 +126,8 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
         [HttpPost]
         public IActionResult CreateDrive(DriveDetailsViewModel driveDetailsViewModel)
         {
+            long? driveID = null;
+
             var drive = new Drive()
             {
                 Name = driveDetailsViewModel.Name,
@@ -139,12 +143,21 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
             };
             try
             {
-                _easyDriveDbService.Add<Drive>(drive);
+                driveID = _easyDriveDbService.Add<Drive>(drive);
             }
             catch (Exception ex)
             {
                 throw ex;
             }
+
+            // Read Spreadsheet
+            SheetsService sheetsService = CreateSheetsService();
+            IEnumerable<Candidate> candidates = FetchSpreadsheetData(sheetsService, driveID.Value).Result;
+
+            // Save in Database
+            IEasyDriveDbService dbService = new EasyDriveDbServices();
+            dbService.Add<Candidate>(Candidates.ToList());
+
             // Redirect to Index
             return View(driveDetailsViewModel);
         }
@@ -179,7 +192,7 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
             return service;
         }
 
-        public async Task<IEnumerable<Candidate>> FetchSpreadsheetData(SheetsService sheetsService)
+        public async Task<IEnumerable<Candidate>> FetchSpreadsheetData(SheetsService sheetsService, long driveID)
         {
             // Define request parameters.
             String spreadsheetId = "1_T-8hgakOdeWE0xCMCYwNvDuSGvPWPb16jPic2ZvXhA";
@@ -209,7 +222,7 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
                         Experience = row[7] != null ? Convert.ToString(row[7]) : "0",
                         NoticePeriod = row[8] != null ? Convert.ToInt16(row[8]) : 0,                        
                         ResumeLink = row[10] != null ? row[10].ToString() : string.Empty,
-                        FK_DriveID = 1 //Hard coded
+                        FK_DriveID = driveID
                     });
                 }
 

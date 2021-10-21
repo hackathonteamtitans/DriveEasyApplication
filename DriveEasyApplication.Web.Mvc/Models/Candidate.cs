@@ -16,7 +16,7 @@ namespace DriveEasyApplication.Web.Mvc.Models
         public string Source { get; set; }
         public Show Confirmed { get; set; }
         public string CurrentOrganization { get; set; }
-        public int FK_DriveID { get; set; }
+        public long FK_DriveID { get; set; }
         public string MeetingLink { get; set; }
         public DateTime InterviewTime { get; set; }
         public string TechnicalPanel { get; set; }
