@@ -149,7 +149,7 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
                     foreach (DataRow dr in result)
                     {
                         Drive drive = new Drive();
-                        drive.DriveID = Convert.ToInt32(dr["DriveID"]);
+                        drive.DriveID = Convert.ToInt32(dr["DriveID"]);                        
                         drive.Name = (string)dr["Name"];
                         drive.DriveDate = DateTime.ParseExact((string)dr["DriveDate"], "yyyy-MM-dd", CultureInfo.InvariantCulture);
                         drive.Department = (string)dr["Department"];
@@ -180,6 +180,7 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
                     {
                         Candidate candidate = new Candidate();
                         candidate.CandidateID = Convert.ToInt32(dr["CandidateID"]);
+                        candidate.FK_DriveID = Convert.ToInt64(driveId);
                         candidate.Name = (string)dr["Name"];
                         candidate.MobileNumber = (string)dr["MobileNumber"];
                         candidate.Skills = (string)dr["Skills"];
@@ -189,7 +190,7 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
                         candidate.Confirmed = (string)dr["Confirmed"];
                         candidate.CurrentOrganization = (string)dr["CurrentOrganization"];
                         candidate.MeetingLink = dr["MeetingLink"] == DBNull.Value ? string.Empty : (string)dr["MeetingLink"];
-                        candidate.FormattedInterviewTime = dr["InterviewTime"] == DBNull.Value ? string.Empty : DateTime.ParseExact((string)dr["InterviewTime"], "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture).ToLongDateString();
+                        candidate.FormattedInterviewTime = dr["InterviewTime"] == DBNull.Value ? string.Empty : DateTime.ParseExact((string)dr["InterviewTime"], "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture).ToString("dd/MM/yyyy HH:mm tt");
                         candidate.TechnicalPanel = dr["TechnicalPanel"] == DBNull.Value ? string.Empty : (string)dr["TechnicalPanel"];
                         candidate.TechnicalPanelFeedback = dr["TechnicalPanelFeedback"] == DBNull.Value ? string.Empty : (string)dr["TechnicalPanelFeedback"];
                         candidate.ManagerPanel = dr["ManagerPanel"] == DBNull.Value ? string.Empty : (string)dr["ManagerPanel"];
@@ -212,6 +213,7 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
             try
             {
                 var candidatesList= GetCandidateDetails(driveId);
+                ViewBag.DriveID = driveId.ToString();
                 return View(candidatesList);
             }
             catch (Exception ex)
@@ -349,8 +351,13 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
             var driveDetails = GetDriveDetails().Where(drive => drive.DriveID == id).FirstOrDefault();
             var candidates = GetCandidateDetails(driveId);
             List<Candidate> updatedCandidates = RunPanelAssignementAlgo(driveDetails, candidates, panelDetails);
-            List<Candidate> scheduledCandidates = CreateCalendarEventsData(candidates);
+            List<Candidate> scheduledCandidates = CreateCalendarEventsData(updatedCandidates);
             // Need to update in database
+            foreach (var candidate in scheduledCandidates)
+            {
+                _easyDriveDbService.Edit<Candidate>(candidate, "CandidateID", candidate.CandidateID.ToString());
+            }
+
             return RedirectToAction("DriveDetails", driveId);
         }
 
@@ -377,8 +384,7 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
                             if (Convert.ToDecimal(candidate.Experience) <= Convert.ToDecimal(panelDetail.Experience))
                             {
                                 candidate.TechnicalPanel = panelDetail.Name;
-                                candidate.FromTime = currentInterviewStart;
-                                candidate.ToTime = currentInterviewEnd;                                
+                                candidate.InterviewTime = currentInterviewStart.Value;
                                 SrNos.Add(candidate.CandidateID);
                                 updateInterviewDatas.Add(candidate);
                                 interviewsAssigned++;
@@ -398,7 +404,7 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
         {
             CalendarService calendarService = this.CreateCalendarService();
             List<Candidate> updatedInterviewDatas = new List<Candidate>();
-            foreach (Candidate interviewData in Candidates)
+            foreach (Candidate interviewData in candidates)
             {
                 Candidate updatedInterviewData = CreateEvent(calendarService, interviewData);
                 updatedInterviewDatas.Add(updatedInterviewData);
@@ -456,9 +462,9 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
             attendes.Add(b);
             body.Attendees = attendes;
             EventDateTime start = new EventDateTime();
-            start.DateTime = candidate.FromTime;
+            start.DateTime = candidate.InterviewTime;
             EventDateTime end = new EventDateTime();
-            end.DateTime = candidate.ToTime;
+            end.DateTime = start.DateTime + new TimeSpan(1, 0, 0);
             body.Start = start;
             body.End = end;
 

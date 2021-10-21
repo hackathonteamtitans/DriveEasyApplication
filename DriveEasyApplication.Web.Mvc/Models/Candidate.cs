@@ -25,15 +25,13 @@ namespace DriveEasyApplication.Web.Mvc.Models
             InterviewTime = (DateTime)dataRow["InterviewTime"];
             TechnicalPanel = (string)dataRow["TechnicalPanel"];
             TechnicalPanelFeedback = (string)dataRow["TechnicalPanelFeedback"];
-            ManagerPanel = (string)dataRow["TechnicalPanelFeedback"];
-            ManagerPanelFeedback = (string)dataRow["TechnicalPanelFeedback"];
-            HRPanel = (string)dataRow["TechnicalPanelFeedback"];
-            HRPanelFeedback = (string)dataRow["TechnicalPanelFeedback"];
-            FeedbackForm = (string)dataRow["TechnicalPanelFeedback"];
-            ResumeLink = (string)dataRow["TechnicalPanelFeedback"];
-            Email = (string)dataRow["TechnicalPanelFeedback"];
-            FromTime = (DateTime)dataRow["TechnicalPanelFeedback"];
-            ToTime = (DateTime)dataRow["TechnicalPanelFeedback"];
+            ManagerPanel = (string)dataRow["ManagerPanel"];
+            ManagerPanelFeedback = (string)dataRow["ManagerPanelFeedback"];
+            HRPanel = (string)dataRow["HRPanel"];
+            HRPanelFeedback = (string)dataRow["HRPanelFeedback"];
+            FeedbackForm = (string)dataRow["FeedbackForm"];
+            ResumeLink = (string)dataRow["ResumeLink"];
+            Email = (string)dataRow["Email"];            
         }
         public int SrNo { get; set; }
         public int CandidateID { get; set; }
@@ -59,9 +57,6 @@ namespace DriveEasyApplication.Web.Mvc.Models
         public string FeedbackForm { get; set; }
         public string ResumeLink { get; set; }
         public string Email { get; set; }
-        public DateTime? FromTime { get; set; }
-        public DateTime? ToTime { get; set; }
-
 
         public Dictionary<string, object> ToDictionary()
         {
