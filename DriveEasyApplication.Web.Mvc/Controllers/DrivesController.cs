@@ -173,7 +173,7 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
                 throw ex;
             }            
 
-            return drivesList;
+            return drivesList.OrderByDescending(d => d.DriveID).ToList();
         }
 
         public List<Candidate> GetCandidateDetails(string driveId)
@@ -221,7 +221,7 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
             {
                 
             }
-            return candidatesList;
+            return candidatesList.OrderByDescending(c => c.CandidateID).ToList();
         }
 
         public IActionResult DrivesDetails(string driveId)

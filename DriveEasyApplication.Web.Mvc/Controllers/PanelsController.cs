@@ -4,6 +4,7 @@ using DriveEasyApplication.Web.Mvc.Services;
 using System.Data;
 using System.Collections.Generic;
 using System;
+using System.Linq;
 
 namespace DriveEasyApplication.Web.Mvc.Controllers
 {
@@ -36,7 +37,7 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
                             panelList.Add(pd);
                         }
                     }
-                    return View(panelList);
+                    return View(panelList.OrderByDescending(p => p.PanelID).ToList());
                 }
             }
             catch (Exception ex)

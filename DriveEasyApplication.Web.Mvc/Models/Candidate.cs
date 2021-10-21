@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -21,7 +22,10 @@ namespace DriveEasyApplication.Web.Mvc.Models
             Confirmed = (string)dataRow["Confirmed"];
             CurrentOrganization = (string)dataRow["CurrentOrganization"];
             MeetingLink = (string)dataRow["MeetingLink"];
-            InterviewTime = Convert.ToDateTime(dataRow["InterviewTime"]);
+            if (dataRow["InterviewTime"] == DBNull.Value || dataRow["InterviewTime"].ToString().Trim() == "")
+                InterviewTime = null;
+            else
+                InterviewTime = Convert.ToDateTime(dataRow["InterviewTime"]);
             TechnicalPanel = (string)dataRow["TechnicalPanel"];
             TechnicalPanelFeedback = (string)dataRow["TechnicalPanelFeedback"];
             ManagerPanel = (string)dataRow["ManagerPanel"];
