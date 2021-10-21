@@ -63,18 +63,24 @@
             return result;
         }
 
-        public static int InsertData(string dbName, string tableName, Dictionary<string, string> columNamesValues)
+        public static int InsertData(string dbName, string tableName, Dictionary<string, object> columNamesValues)
         {
             string query = string.Empty;
             string columns = string.Empty;
             string values = string.Empty;
 
-            foreach (KeyValuePair<string, string> columnNameValue in columNamesValues)
+            foreach (KeyValuePair<string, object> columnNameValue in columNamesValues)
             {
                 columns += $"{ columnNameValue.Key},";
-                values += $"'{ columnNameValue.Value}',";
+                if (tableName == "Candidate" && columnNameValue.Key.Contains("FK_"))
+                {
+                    values += $"{ columnNameValue.Value},";
+                }
+                else
+                    values += $"'{ columnNameValue.Value}',";
             }
 
+            
             return ExecuteNonQuerry(dbName, $"INSERT INTO {tableName} ({columns.TrimEnd(',')}) VALUES({values.TrimEnd(',')});");
         }
 

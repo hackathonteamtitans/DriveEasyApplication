@@ -20,9 +20,9 @@ namespace DriveEasyApplication.Web.Mvc.Models
         public string Title { get; set; }
 
 
-        public Dictionary<string, string> ToDictionary()
+        public Dictionary<string, object> ToDictionary()
         {
-            Dictionary<string, string> KeyValuePairs = new Dictionary<string, string>();
+            Dictionary<string, object> KeyValuePairs = new Dictionary<string, object>();
             KeyValuePairs.Add("PanelID", PanelID.ToString());
             KeyValuePairs.Add("Name", Name);
             KeyValuePairs.Add("Email", Email);

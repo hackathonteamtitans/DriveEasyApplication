@@ -86,6 +86,7 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
 
         public IActionResult Index()
         {
+            // We need Drive ID for storing in table
             SheetsService sheetsService = CreateSheetsService();
             IEnumerable<Candidate> Candidates = FetchSpreadsheetData(sheetsService).Result;
             // Save Database
@@ -105,6 +106,11 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
             return View();
         }
 
+        public IActionResult SendInvites(int driveId)
+        {
+            return null;
+        }
+
         private SheetsService CreateSheetsService()
         {
             UserCredential credential;
@@ -117,7 +123,7 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
                 // automatically when the authorization flow completes for the first time.
                 string credPath = "token.json";
                 credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
-                    GoogleClientSecrets.Load(stream).Secrets,
+                    GoogleClientSecrets.FromStream(stream).Secrets,
                     Scopes,
                     "user",
                     CancellationToken.None,
@@ -164,7 +170,8 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
                         Email = row[6] != null ? row[6].ToString() : string.Empty,
                         Experience = row[7] != null ? Convert.ToString(row[7]) : "0",
                         NoticePeriod = row[8] != null ? Convert.ToInt16(row[8]) : 0,                        
-                        ResumeLink = row[10] != null ? row[10].ToString() : string.Empty,                        
+                        ResumeLink = row[10] != null ? row[10].ToString() : string.Empty,
+                        FK_DriveID = 1 //Hard coded
                     });
                 }
 

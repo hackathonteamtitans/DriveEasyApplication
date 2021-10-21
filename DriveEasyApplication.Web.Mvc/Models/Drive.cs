@@ -16,9 +16,9 @@ namespace DriveEasyApplication.Web.Mvc.Models
         public DateTime BreakStartTime { get; set; }
         public DateTime BreakEndTime { get; set; }
 
-        public Dictionary<string, string> ToDictionary()
+        public Dictionary<string, object> ToDictionary()
         {
-            Dictionary<string, string> keyValuePair = new Dictionary<string, string>();
+            Dictionary<string, object> keyValuePair = new Dictionary<string, object>();
             keyValuePair.Add("DriveID", DriveID.ToString());
             keyValuePair.Add("Name", Name);
             keyValuePair.Add("DriveDate", DriveDate.ToString());
