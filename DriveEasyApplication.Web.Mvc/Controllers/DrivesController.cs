@@ -79,10 +79,11 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
 
         public IActionResult Index()
         {
-            SheetsService sheetsService = CreateSheetsService();
-            IEnumerable<Candidate> Candidates = FetchSpreadsheetData(sheetsService).Result;
-            SendInvites();
-            return View(Candidates);
+            // SheetsService sheetsService = CreateSheetsService();
+            // IEnumerable<Candidate> Candidates = FetchSpreadsheetData(sheetsService).Result;
+            // SendInvites();
+            // return View(Candidates);
+            return View();
         }
         public IActionResult DrivesDetails()
         {
@@ -92,6 +93,11 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
         public IActionResult CandidateDetails(int driveId)
         {
             return View();
+        }
+
+        public IActionResult SendInvites(int driveId)
+        {
+            return null;
         }
 
         private SheetsService CreateSheetsService()
@@ -106,7 +112,7 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
                 // automatically when the authorization flow completes for the first time.
                 string credPath = "token.json";
                 credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
-                    GoogleClientSecrets.Load(stream).Secrets,
+                    GoogleClientSecrets.FromStream(stream).Secrets,
                     Scopes,
                     "user",
                     CancellationToken.None,
