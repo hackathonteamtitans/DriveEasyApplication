@@ -8,5 +8,9 @@ namespace DriveEasyApplication.Web.Mvc.Services
         void Add<T>(T data);
 
         void Add<T>(IList<T> data);
+
+        List<Panel> GetPanel(string colName, object value);
+
+        List<Candidate> GetCandidate(string colName, object value);
     }
 }

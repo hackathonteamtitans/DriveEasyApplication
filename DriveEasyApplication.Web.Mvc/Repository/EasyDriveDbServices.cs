@@ -99,5 +99,22 @@ namespace DriveEasyApplication.Web.Mvc.Services
             }
             return obj;
         }
+
+        public List<Panel> GetPanel(string colName, object value)
+        {
+            List<Panel> panel = new List<Panel>();
+            DataTable dataTable = ExecuteQuerry($"Select * from Panel where {colName} = '{value}'");
+
+            foreach (DataRow row in dataTable.Rows)
+            {
+                panel.Add(new Panel(row));
+            }
+            return panel;
+        }
+
+        public List<Candidate> GetCandidate(string colName, object value)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

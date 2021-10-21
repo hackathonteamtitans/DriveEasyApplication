@@ -131,7 +131,7 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
             };
             try
             {
-                _easyDriveDbService.Add<Drive>(drive);
+                var k = _easyDriveDbService.GetPanel("Department", "Merchant");
             }
             catch (Exception ex)
             {

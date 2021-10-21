@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -7,6 +8,21 @@ namespace DriveEasyApplication.Web.Mvc.Models
 {
     public class Panel
     {
+        public Panel(DataRow dataRow)
+        {
+            PanelID = Convert.ToInt32(dataRow["PanelID"]);
+            Name = (string)dataRow["Name"];
+            Email = dataRow["Email"].ToString();
+            MobileNumber = (string)dataRow["MobileNumber"];
+            EmployeeID = Convert.ToInt32(dataRow["EmployeeID"]);
+            Skills = (string)dataRow["Skills"];
+            Manager = (string)dataRow["Manager"];
+            Department = (string)dataRow["Department"];
+            PanelType = (PanelType)dataRow["PanelType"];
+            Experience = (string)dataRow["Experience"];
+            Title = (string)dataRow["Title"];
+        }
+
         public int PanelID { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
