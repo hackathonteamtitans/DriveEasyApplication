@@ -94,7 +94,7 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
         {
             try
             {
-                List<Drive> drivesList = new List<Drive>();
+                var drivesList = new List<Drive>();
                 using (EasyDriveDbServices easyDriveDbServices = new EasyDriveDbServices())
                 {
                     var result = easyDriveDbServices.ReadTableAsList("Drive");
@@ -109,6 +109,7 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
                             drive.Department = (string)dr["Department"];
                             drive.Organizer = (string)dr["Organizer"];
                             drive.Status = (string)dr["DriveStatus"];
+                            drive.DriveStatus = (int)Enum.Parse(typeof(DriveStatus), drive.Status);
                             drive.DriveStartTime = DateTime.ParseExact((string)dr["DriveStartTime"], "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture);
                             drive.DriveEndTime = DateTime.ParseExact((string)dr["DriveEndTime"], "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture);
                             drive.BreakStartTime = DateTime.ParseExact((string)dr["BreakStartTime"], "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture);
@@ -117,7 +118,7 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
                         }
                     }
                 }
-                return View(drivesList);
+                return View(new DriveDetailsViewModel() { Drives = drivesList});
             }
             catch(Exception ex)
             {
@@ -207,7 +208,7 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
             }
             catch (Exception ex)
             {
-
+                throw ex;
             }
 
             // Read Spreadsheet

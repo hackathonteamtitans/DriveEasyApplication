@@ -13,7 +13,7 @@
 
     public enum DriveStatus
     {
-        NotStarted = 1,
+        Unscheduled = 1,
         Scheduled,
         InProgress,
         Completed
