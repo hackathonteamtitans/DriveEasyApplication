@@ -48,12 +48,12 @@
                             <td>@panel.Manager</td>
                             <td>@panel.Department</td>
                             <td class="project-actions">
-                                <a class="btn btn-info btn-sm" href="@Url.Action("Edit", "Panel", new { panelId = panel.PanelID })">
+                                <a class="btn btn-info btn-sm" href="@Url.Action("Edit", "Panels", new { panelId = panel.PanelID })">
                                     <i class="fas fa-pencil-alt">
                                     </i>
                                     Edit
                                 </a>
-                                <a class="btn btn-danger btn-sm" href="@Url.Action("Delete", "Panel", new { panelId = panel.PanelID })">
+                                <a class="btn btn-danger btn-sm" href="@Url.Action("Delete", "Panels", new { panelId = panel.PanelID })">
                                     <i class="fas fa-trash">
                                     </i>
                                     Delete
