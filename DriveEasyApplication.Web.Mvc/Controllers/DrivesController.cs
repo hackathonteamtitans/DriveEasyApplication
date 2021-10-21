@@ -171,41 +171,48 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
         public List<Candidate> GetCandidateDetails(string driveId)
         {
             List<Candidate> candidatesList = new List<Candidate>();
-            using (EasyDriveDbServices easyDriveDbServices = new EasyDriveDbServices())
+            try
             {
-                string query = $"SELECT * FROM CANDIDATE WHERE FK_DRIVEID = {Convert.ToInt32(driveId)}";
-                var result = easyDriveDbServices.ExecuteQuerryAsList(query);
-                if (result != null && result.Count > 0)
+                using (EasyDriveDbServices easyDriveDbServices = new EasyDriveDbServices())
                 {
-                    foreach (DataRow dr in result)
+                    string query = $"SELECT * FROM CANDIDATE WHERE FK_DRIVEID = {Convert.ToInt32(driveId)}";
+                    var result = easyDriveDbServices.ExecuteQuerryAsList(query);
+                    if (result != null && result.Count > 0)
                     {
-                        Candidate candidate = new Candidate();
-                        candidate.CandidateID = Convert.ToInt32(dr["CandidateID"]);
-                        candidate.FK_DriveID = Convert.ToInt64(driveId);
-                        candidate.Name = (string)dr["Name"];
-                        candidate.MobileNumber = (string)dr["MobileNumber"];
-                        candidate.Skills = (string)dr["Skills"];
-                        candidate.Experience = (string)dr["Experience"];
-                        candidate.NoticePeriod = Convert.ToInt32(dr["NoticePeriod"]);
-                        candidate.Source = (string)dr["Source"];
-                        candidate.Confirmed = (string)dr["Confirmed"];
-                        candidate.CurrentOrganization = (string)dr["CurrentOrganization"];
-                        candidate.MeetingLink = dr["MeetingLink"] == DBNull.Value ? string.Empty : (string)dr["MeetingLink"];
-                        candidate.FormattedInterviewTime = dr["InterviewTime"] == DBNull.Value ? string.Empty : DateTime.ParseExact((string)dr["InterviewTime"], "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture).ToString("dd/MM/yyyy HH:mm tt");
-                        candidate.TechnicalPanel = dr["TechnicalPanel"] == DBNull.Value ? string.Empty : (string)dr["TechnicalPanel"];
-                        candidate.TechnicalPanelFeedback = dr["TechnicalPanelFeedback"] == DBNull.Value ? string.Empty : (string)dr["TechnicalPanelFeedback"];
-                        candidate.ManagerPanel = dr["ManagerPanel"] == DBNull.Value ? string.Empty : (string)dr["ManagerPanel"];
-                        candidate.ManagerPanelFeedback = dr["ManagerPanelFeedback"] == DBNull.Value ? string.Empty : (string)dr["ManagerPanelFeedback"];
-                        candidate.HRPanel = dr["HRPanel"] == DBNull.Value ? string.Empty : (string)dr["HRPanel"];
-                        candidate.HRPanelFeedback = dr["HRPanelFeedback"] == DBNull.Value ? string.Empty : (string)dr["HRPanelFeedback"];
-                        candidate.FeedbackForm = dr["FeedbackForm"] == DBNull.Value ? string.Empty : (string)dr["FeedbackForm"];
-                        candidate.ResumeLink = (string)dr["ResumeLink"];
-                        candidate.Email = (string)dr["Email"];
-                        candidatesList.Add(candidate);
+                        foreach (DataRow dr in result)
+                        {
+                            Candidate candidate = new Candidate();
+                            candidate.CandidateID = Convert.ToInt32(dr["CandidateID"]);
+                            candidate.FK_DriveID = Convert.ToInt64(driveId);
+                            candidate.Name = (string)dr["Name"];
+                            candidate.MobileNumber = (string)dr["MobileNumber"];
+                            candidate.Skills = (string)dr["Skills"];
+                            candidate.Experience = (string)dr["Experience"];
+                            candidate.NoticePeriod = Convert.ToInt32(dr["NoticePeriod"]);
+                            candidate.Source = (string)dr["Source"];
+                            candidate.Confirmed = (string)dr["Confirmed"];
+                            candidate.CurrentOrganization = (string)dr["CurrentOrganization"];
+                            candidate.MeetingLink = dr["MeetingLink"] == DBNull.Value ? string.Empty : (string)dr["MeetingLink"];
+                            candidate.FormattedInterviewTime = dr["InterviewTime"] == DBNull.Value ? string.Empty : DateTime.ParseExact((string)dr["InterviewTime"], "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture).ToString("dd/MM/yyyy hh:mm tt");
+                            candidate.TechnicalPanel = dr["TechnicalPanel"] == DBNull.Value ? string.Empty : (string)dr["TechnicalPanel"];
+                            candidate.TechnicalPanelFeedback = dr["TechnicalPanelFeedback"] == DBNull.Value ? string.Empty : (string)dr["TechnicalPanelFeedback"];
+                            candidate.ManagerPanel = dr["ManagerPanel"] == DBNull.Value ? string.Empty : (string)dr["ManagerPanel"];
+                            candidate.ManagerPanelFeedback = dr["ManagerPanelFeedback"] == DBNull.Value ? string.Empty : (string)dr["ManagerPanelFeedback"];
+                            candidate.HRPanel = dr["HRPanel"] == DBNull.Value ? string.Empty : (string)dr["HRPanel"];
+                            candidate.HRPanelFeedback = dr["HRPanelFeedback"] == DBNull.Value ? string.Empty : (string)dr["HRPanelFeedback"];
+                            candidate.FeedbackForm = dr["FeedbackForm"] == DBNull.Value ? string.Empty : (string)dr["FeedbackForm"];
+                            candidate.ResumeLink = (string)dr["ResumeLink"];
+                            candidate.Email = (string)dr["Email"];                            
+                            candidate.CandidateStatus = Convert.ToInt32(candidate.CandidateStatus);
+                            candidatesList.Add(candidate);
+                        }
                     }
                 }
             }
-
+            catch (Exception ex)
+            {
+                
+            }
             return candidatesList;
         }
 
@@ -331,7 +338,8 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
                         Experience = row[7] != null ? Convert.ToString(row[7]) : "0",
                         NoticePeriod = row[8] != null ? Convert.ToInt16(row[8]) : 0,                        
                         ResumeLink = row[10] != null ? row[10].ToString() : string.Empty,
-                        FK_DriveID = driveID
+                        FK_DriveID = driveID,
+                        CandidateStatus = (int)CandidateStatus.Unscheduled,
                     });
                 }
 
@@ -356,10 +364,11 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
             // Need to update in database
             foreach (var candidate in scheduledCandidates)
             {
+                candidate.CandidateStatus = (int)Enum.Parse(typeof(CandidateStatus), CandidateStatus.Scheduled.ToString()); 
                 _easyDriveDbService.Edit<Candidate>(candidate, "CandidateID", candidate.CandidateID.ToString());
             }
 
-            return RedirectToAction("DriveDetails", driveId);
+            return RedirectToAction("DrivesDetails", driveId);
         }
 
         public List<Candidate> RunPanelAssignementAlgo(Drive drive, List<Candidate> candidates, List<PanelDetail> panelDetails)

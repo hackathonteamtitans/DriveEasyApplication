@@ -31,7 +31,8 @@ namespace DriveEasyApplication.Web.Mvc.Models
             HRPanelFeedback = (string)dataRow["HRPanelFeedback"];
             FeedbackForm = (string)dataRow["FeedbackForm"];
             ResumeLink = (string)dataRow["ResumeLink"];
-            Email = (string)dataRow["Email"];            
+            Email = (string)dataRow["Email"];
+            CandidateStatus = Convert.ToInt32(dataRow["CandidateStatus"]);
         }
         public int SrNo { get; set; }
         public int CandidateID { get; set; }
@@ -45,8 +46,8 @@ namespace DriveEasyApplication.Web.Mvc.Models
         public string CurrentOrganization { get; set; }
         public long FK_DriveID { get; set; }
         public string MeetingLink { get; set; }
-        public DateTime InterviewTime { get; set; }
-
+        public DateTime InterviewTime { get; set; }        
+        public int CandidateStatus { get; set; }
         public string FormattedInterviewTime { get; set; }
         public string TechnicalPanel { get; set; }
         public string TechnicalPanelFeedback { get; set; }
@@ -82,6 +83,7 @@ namespace DriveEasyApplication.Web.Mvc.Models
             keyValuePairs.Add("HRPanelFeedback", HRPanelFeedback);
             keyValuePairs.Add("FeedbackForm", FeedbackForm);
             keyValuePairs.Add("ResumeLink", ResumeLink);
+            keyValuePairs.Add("CandidateStatus", CandidateStatus.ToString());
             return keyValuePairs;
         }
 

@@ -10,6 +10,12 @@
 <link rel="stylesheet" href="../../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
 <link rel="stylesheet" href="../../plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
 
+@{ 
+    bool isScheduled = Model.
+        Where(candidate => candidate.CandidateStatus !=
+        (int)Enum.Parse(typeof(DriveStatus), CandidateStatus.Scheduled.ToString())).ToList().Count > 0;
+}
+
 <div class="row">
     <div class="col-12">
         <div class="card">
@@ -31,31 +37,36 @@
                                 <th>Source</th>
                                 <th>Confirmed</th>
                                 <th>Current Org</th>
-                                <th>Meeting Link</th>
-                                <th>Interview Time</th>
-                                <th>Tech Panel</th>
-                                <th>Tech feedback</th>
-                                <th>Manager Panel</th>
-                                <th>Manager Feedback</th>
-                                <th>HR Panel</th>
-                                <th>HR Feedback</th>
-                                <th>Feedback Form</th>
+                                @if (isScheduled)
+                                {
+                                    <th>Meeting Link</th>
+                                    <th>Interview Time</th>
+                                    <th>Tech Panel</th>
+                                    <th>Tech feedback</th>
+                                    <th>Manager Panel</th>
+                                    <th>Manager Feedback</th>
+                                    <th>HR Panel</th>
+                                    <th>HR Feedback</th>
+                                    <th>Feedback Form</th>
+                                }
                             </tr>
                         </thead>
                         <tbody>
                             @foreach (Candidate candidate in Model)
                             {
-                                <tr>
-                                    <td>@candidate.Name</td>
-                                    <td>@candidate.Email</td>
-                                    <td>@candidate.MobileNumber</td>
-                                    <td>@candidate.Experience</td>
-                                    <td>@candidate.Skills</td>
-                                    <td><a href="@candidate.ResumeLink" target="_blank">Resume</a></td>
-                                    <td>@candidate.NoticePeriod</td>
-                                    <td>@candidate.Source</td>
-                                    <td>@candidate.Confirmed</td>
-                                    <td>@candidate.CurrentOrganization</td>
+                            <tr>
+                                <td>@candidate.Name</td>
+                                <td>@candidate.Email</td>
+                                <td>@candidate.MobileNumber</td>
+                                <td>@candidate.Experience</td>
+                                <td>@candidate.Skills</td>
+                                <td><a href="@candidate.ResumeLink" target="_blank">Resume</a></td>
+                                <td>@candidate.NoticePeriod</td>
+                                <td>@candidate.Source</td>
+                                <td>@candidate.Confirmed</td>
+                                <td>@candidate.CurrentOrganization</td>
+                                @if (isScheduled)
+                                {
                                     <td><a href="@candidate.MeetingLink" target="_blank">Join Meeting</a></td>
                                     <td>@candidate.FormattedInterviewTime</td>
                                     <td>@candidate.TechnicalPanel</td>
@@ -65,8 +76,9 @@
                                     <td>@candidate.HRPanel</td>
                                     <td>@candidate.HRPanelFeedback</td>
                                     <td>@candidate.FeedbackForm</td>
-                                    @*<td><span class="badge badge-warning">No Show</span></td>*@
-                                </tr>
+                                }
+                                @*<td><span class="badge badge-warning">No Show</span></td>*@
+                            </tr>
                             }
                         </tbody>
                     </table>
