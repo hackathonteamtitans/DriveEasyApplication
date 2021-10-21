@@ -23,10 +23,10 @@ namespace DriveEasyApplication.Web.Mvc.Services
             switch (data)
             {
                 case Candidate candidate:
-                    InsertData(DbName, "Candidates", candidate.ToDictionary());
+                    InsertData(DbName, "Candidate", candidate.ToDictionary());
                     break;
                 case Drive drive:
-                    InsertData(DbName, "Drive", drive.ToDictionary());
+                    var result = InsertData(DbName, "Drive", drive.ToDictionary());
                     break;
                 case Panel panel:
                     InsertData(DbName, "Panel", panel.ToDictionary());

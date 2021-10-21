@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace DriveEasyApplication.Web.Mvc.Services
 {
-    interface IEasyDriveDbService
+    public interface IEasyDriveDbService
     {
         void Add<T>(T data);
 

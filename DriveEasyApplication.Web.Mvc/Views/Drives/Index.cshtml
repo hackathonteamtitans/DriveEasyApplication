@@ -1,4 +1,5 @@
-﻿@{
+﻿@model DriveEasyApplication.Web.Mvc.Models.DriveDetailsViewModel
+@{
     ViewData["Title"] = "Scheduled Drive(s)";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -146,116 +147,111 @@
     <!-- /.col -->
 </div>
 
-
-<div class="modal fade" id="modal-lg">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Drive</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="card card-primary">
-                            <div class="card-header">
-                                <h3 class="card-title">Information</h3>
-                                <div class="card-tools">
-                                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                                        <i class="fas fa-minus"></i>
-                                    </button>
+<form asp-controller="Drives" asp-action="CreateDrive" method="post">
+    <div class="modal fade" id="modal-lg">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Drive</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card card-primary">
+                                <div class="card-header">
+                                    <h3 class="card-title">Information</h3>
+                                    <div class="card-tools">
+                                        <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                                            <i class="fas fa-minus"></i>
+                                        </button>
+                                    </div>
                                 </div>
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <label asp-for="Name"></label>
+                                        <input type="text" id="inputName" asp-for="Name" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Organizer"></label>
+                                        <input type="text" id="inputOrganizer" asp-for="Organizer" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Department"></label>
+                                        <input type="text" id="inputDepartment" asp-for="Department"  class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="SheetLink"></label>
+                                        <input type="text" id="inputCopySheet" asp-for="SheetLink" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="DriveDate"></label>
+                                        <div class="input-group date" id="reservationdate" data-target-input="nearest">
+                                            <input type="text" asp-for="DriveDate" class="form-control datetimepicker-input" data-target="#reservationdate" />
+                                            <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
+                                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="DriveStartTime"></label>
+                                        <div class="input-group date" id="reservationdatetime1" data-target-input="nearest">
+                                            <input type="text" asp-for="DriveStartTime" class="form-control datetimepicker-input" data-target="#reservationdatetime1" />
+                                            <div class="input-group-append" data-target="#reservationdatetime1" data-toggle="datetimepicker">
+                                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="DriveEndTime"></label>
+                                        <div class="input-group date" id="reservationdatetime2" data-target-input="nearest">
+                                            <input type="text" asp-for="DriveEndTime" class="form-control datetimepicker-input" data-target="#reservationdatetime2" />
+                                            <div class="input-group-append" data-target="#reservationdatetime2" data-toggle="datetimepicker">
+                                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="BreakStartTime"></label>
+                                        <div class="input-group date" id="reservationdatetime3" data-target-input="nearest">
+                                            <input type="text" asp-for="BreakStartTime" class="form-control datetimepicker-input" data-target="#reservationdatetime3" />
+                                            <div class="input-group-append" data-target="#reservationdatetime3" data-toggle="datetimepicker">
+                                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="BreakEndTime"></label>
+                                        <div class="input-group date" id="reservationdatetime4" data-target-input="nearest">
+                                            <input type="text" asp-for="BreakEndTime" class="form-control datetimepicker-input" data-target="#reservationdatetime4" />
+                                            <div class="input-group-append" data-target="#reservationdatetime4" data-toggle="datetimepicker">
+                                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="DriveStatus"></label>
+                                        <select asp-for="DriveStatus" class="form-control custom-select" asp-items="Html.GetEnumSelectList<DriveStatus>()"></select>
+                                    </div>
+                                </div>
+                                <!-- /.card-body -->
                             </div>
-                            <div class="card-body">
-                                <div class="form-group">
-                                    <label for="inputName">Drive Name</label>
-                                    <input type="text" id="inputName" class="form-control">
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputOrganizer">Organizer</label>
-                                    <input type="text" id="inputOrganizer" class="form-control">
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputDepartment">Department</label>
-                                    <input type="text" id="inputDepartment" class="form-control">
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputCopySheet">Paste Drive Sheet(s) Link</label>
-                                    <input type="text" id="inputCopySheet" class="form-control">
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputdate">Date</label>
-                                    <div class="input-group date" id="reservationdate" data-target-input="nearest">
-                                        <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate" />
-                                        <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
-                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputDriveStart">Drive Start</label>
-                                    <div class="input-group date" id="reservationdatetime1" data-target-input="nearest">
-                                        <input type="text" class="form-control datetimepicker-input" data-target="#reservationdatetime1" />
-                                        <div class="input-group-append" data-target="#reservationdatetime1" data-toggle="datetimepicker">
-                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputDriveEnd">Drive End</label>
-                                    <div class="input-group date" id="reservationdatetime2" data-target-input="nearest">
-                                        <input type="text" class="form-control datetimepicker-input" data-target="#reservationdatetime2" />
-                                        <div class="input-group-append" data-target="#reservationdatetime2" data-toggle="datetimepicker">
-                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputBreakStart">Break Start</label>
-                                    <div class="input-group date" id="reservationdatetime3" data-target-input="nearest">
-                                        <input type="text" class="form-control datetimepicker-input" data-target="#reservationdatetime3" />
-                                        <div class="input-group-append" data-target="#reservationdatetime3" data-toggle="datetimepicker">
-                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputBreakEnd">Break End</label>
-                                    <div class="input-group date" id="reservationdatetime4" data-target-input="nearest">
-                                        <input type="text" class="form-control datetimepicker-input" data-target="#reservationdatetime4" />
-                                        <div class="input-group-append" data-target="#reservationdatetime4" data-toggle="datetimepicker">
-                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputStatus">Status</label>
-                                    <select id="inputStatus" class="form-control custom-select">
-                                        <option selected disabled>Select one</option>
-                                        <option>Not Started</option>
-                                        <option>In Progress</option>
-                                        <option>Completed</option>
-                                        <option>Scheduled</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <!-- /.card-body -->
+                            <!-- /.card -->
                         </div>
-                        <!-- /.card -->
                     </div>
                 </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
             </div>
-            <div class="modal-footer justify-content-between">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
+            <!-- /.modal-content -->
         </div>
-        <!-- /.modal-content -->
+        <!-- /.modal-dialog -->
     </div>
-    <!-- /.modal-dialog -->
-</div>
+</form>
 
 @section scripts{
     <script>

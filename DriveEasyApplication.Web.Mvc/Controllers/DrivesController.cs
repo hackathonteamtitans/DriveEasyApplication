@@ -1,4 +1,5 @@
 ﻿using DriveEasyApplication.Web.Mvc.Models;
+using DriveEasyApplication.Web.Mvc.Services;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Calendar.v3;
 using Google.Apis.Calendar.v3.Data;
@@ -21,6 +22,11 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
 {
     public class DrivesController : Controller
     {
+        private readonly IEasyDriveDbService _easyDriveDbService;
+        public DrivesController(IEasyDriveDbService easyDriveDbService)
+        {
+            _easyDriveDbService = easyDriveDbService;
+        }
         static string[] Scopes = {
             SheetsService.Scope.SpreadsheetsReadonly,
             CalendarService.Scope.Calendar,
@@ -89,7 +95,7 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
             // IEnumerable<Candidate> Candidates = FetchSpreadsheetData(sheetsService).Result;
             // SendInvites();
             // return View(Candidates);
-            return View();
+            return View(new DriveDetailsViewModel());
         }
 
         public IActionResult DrivesDetails()
@@ -102,9 +108,37 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
             return View();
         }
 
-        public IActionResult SendInvites(int driveId)
+        public IActionResult SendInvites(int driveId) 
         {
             return null;
+        }
+
+        [HttpPost]
+        public IActionResult CreateDrive(DriveDetailsViewModel driveDetailsViewModel)
+        {
+            var drive = new Drive()
+            {
+                Name = driveDetailsViewModel.Name,
+                Department = driveDetailsViewModel.Department,
+                Organizer = driveDetailsViewModel.Organizer,
+                SheetLink = driveDetailsViewModel.SheetLink,
+                DriveDate = driveDetailsViewModel?.DriveDate ?? DateTime.Now,
+                DriveStartTime = driveDetailsViewModel.DriveStartTime ?? DateTime.Now,
+                DriveEndTime = driveDetailsViewModel.DriveEndTime ?? DateTime.Now,
+                BreakStartTime = driveDetailsViewModel.BreakStartTime ?? DateTime.Now,
+                BreakEndTime = driveDetailsViewModel.BreakEndTime ?? DateTime.Now,
+                DriveStatus = (int)driveDetailsViewModel.DriveStatus
+            };
+            try
+            {
+                _easyDriveDbService.Add<Drive>(drive);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            // Redirect to Index
+            return View(driveDetailsViewModel);
         }
 
         private SheetsService CreateSheetsService()
