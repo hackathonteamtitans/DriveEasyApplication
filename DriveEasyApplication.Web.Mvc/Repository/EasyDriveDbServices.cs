@@ -198,5 +198,17 @@ namespace DriveEasyApplication.Web.Mvc.Services
             // readability and maintainability.
             Dispose(disposing: false);
         }
+
+        public List<Drive> GetDrives()
+        {
+            var drives = new List<Drive>();
+            DataTable dataTable = ExecuteQuerry($"Select * from Drive");
+
+            foreach (DataRow row in dataTable.Rows)
+            {
+                drives.Add(new Drive(row));
+            }
+            return drives;
+        }
     }
 }

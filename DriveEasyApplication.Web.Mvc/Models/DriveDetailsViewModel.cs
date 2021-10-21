@@ -8,6 +8,10 @@ namespace DriveEasyApplication.Web.Mvc.Models
 {
     public class DriveDetailsViewModel
     {
+        public DriveDetailsViewModel()
+        {
+            Drives = new List<Drive>();
+        }
         public int? DriveID { get; set; }
         [Display(Name = "Drive Name")]
         public string Name { get; set; }
@@ -32,5 +36,6 @@ namespace DriveEasyApplication.Web.Mvc.Models
 
         [Display(Name = "Status")]
         public DriveStatus DriveStatus { get; set; }
+        public List<Drive> Drives { get; set; }
     }
 }

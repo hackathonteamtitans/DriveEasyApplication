@@ -16,5 +16,7 @@ namespace DriveEasyApplication.Web.Mvc.Services
         List<Panel> GetPanel(string colName, object value);
 
         List<Candidate> GetCandidate(string colName, object value);
+
+        List<Drive> GetDrives();
     }
 }

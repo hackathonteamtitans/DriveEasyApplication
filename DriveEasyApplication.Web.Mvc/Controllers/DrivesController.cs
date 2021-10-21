@@ -164,7 +164,7 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
                 }
             }
 
-            return drivesList;
+            return View(new DriveDetailsViewModel() { Drives = drivesList });
         }
 
         public List<Candidate> GetCandidateDetails(string driveId)
@@ -255,7 +255,7 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
             }
             catch (Exception ex)
             {
-
+                throw ex;
             }
 
             // Read Spreadsheet

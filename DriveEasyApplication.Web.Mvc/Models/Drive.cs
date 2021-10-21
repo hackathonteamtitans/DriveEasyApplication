@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -7,6 +8,24 @@ namespace DriveEasyApplication.Web.Mvc.Models
 {
     public class Drive
     {
+        public Drive()
+        {
+
+        }
+        public Drive(DataRow dataRow)
+        {
+            DriveID = Convert.ToInt32(dataRow["DriveID"]);
+            Name = (string)dataRow["Name"];
+            Organizer = dataRow["Organizer"].ToString();
+            SheetLink = (string)dataRow["SheetLink"];
+            Department = dataRow["Department"].ToString();
+            DriveDate = Convert.ToDateTime(dataRow["DriveDate"]);
+            DriveStartTime = Convert.ToDateTime(dataRow["DriveStartTime"]);
+            DriveEndTime = Convert.ToDateTime(dataRow["DriveEndTime"]);
+            BreakStartTime = Convert.ToDateTime(dataRow["BreakStartTime"]);
+            BreakEndTime = Convert.ToDateTime(dataRow["BreakEndTime"]);
+            DriveStatus = Convert.ToInt32(dataRow["DriveStatus"]);
+        }
         public int? DriveID { get; set; }
         public string Name { get; set; }
         public string SheetLink { get; set; }
