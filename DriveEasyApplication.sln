@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DriveEasyApplication.Web.API", "DriveEasyApplication.Web.API\DriveEasyApplication.Web.API.csproj", "{ABF246A4-D9AB-4BA3-8DAB-8FF0104AE841}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DriveEasyApplication.Web.Mvc", "DriveEasyApplication.Web.Mvc\DriveEasyApplication.Web.Mvc.csproj", "{5D4FA41F-1CA8-4AFA-83B9-C4DEC0E8C8C9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DriveEasyApplication.Web.Mvc", "DriveEasyApplication.Web.Mvc\DriveEasyApplication.Web.Mvc.csproj", "{5D4FA41F-1CA8-4AFA-83B9-C4DEC0E8C8C9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

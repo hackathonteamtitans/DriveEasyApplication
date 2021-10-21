@@ -1,4 +1,5 @@
-﻿@{
+﻿@model List<DriveEasyApplication.Web.Mvc.Models.Candidate>
+@{
     ViewData["Title"] = "Drive(s) Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -16,179 +17,60 @@
                 <a href="@Url.Action("SendInvites","Drives")" class="btn btn-primary float-right" ><i class="fa fa-paper-plane"></i> Send Invite(s)</a>
             </div>
             <div class="card-body">
-                <table id="drivesDetails" class="table table-bordered table-striped">
-                    <thead>
-                        <tr>
-                            <th>Candidate Name</th>
-                            <th>Skill Set</th>
-                            <th>Source</th>
-                            <th>Confirmed</th>
-                            <th>Contact</th>
-                            <th>Email</th>
-                            <th>Experience</th>
-                            <th>Notice Period</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><a href="@Url.Action("CandidateDetails","Drives")">Sharique Nadeem</a></td>
-                            <td>
-                                C#, .NET
-                            </td>
-                            <td>Referral</td>
-                            <td>Yes</td>
-                            <td>9011053276</td>
-                            <td>test1@gmail.com</td>
-                            <td>4</td>
-                            <td>60</td>
-                            <td><span class="badge badge-warning">No Show</span></td>
-                        </tr>
-                        <tr>
-                            <td><a href="@Url.Action("CandidateDetails","Drives")">Sharique Nadeem</a></td>
-                            <td>
-                                C#, .NET
-                            </td>
-                            <td>Referral</td>
-                            <td>Yes</td>
-                            <td>9011053276</td>
-                            <td>test1@gmail.com</td>
-                            <td>4</td>
-                            <td>60</td>
-                            <td><span class="badge badge-success">Selected</span></td>
-                        </tr>
-                        <tr>
-                            <td><a href="@Url.Action("CandidateDetails","Drives")">Sharique Nadeem</a></td>
-                            <td>
-                                C#, .NET
-                            </td>
-                            <td>Referral</td>
-                            <td>Yes</td>
-                            <td>9011053276</td>
-                            <td>test1@gmail.com</td>
-                            <td>4</td>
-                            <td>60</td>
-                            <td><span class="badge badge-danger">Rejected</span></td>
-                        </tr>
-                        <tr>
-                            <td><a href="@Url.Action("CandidateDetails","Drives")">Sharique Nadeem</a></td>
-                            <td>
-                                C#, .NET
-                            </td>
-                            <td>Referral</td>
-                            <td>Yes</td>
-                            <td>9011053276</td>
-                            <td>test1@gmail.com</td>
-                            <td>4</td>
-                            <td>60</td>
-                            <td><span class="badge badge-info">In Progress</span></td>
-                        </tr>
-                        <tr>
-                            <td><a href="@Url.Action("CandidateDetails","Drives")">Sharique Nadeem</a></td>
-                            <td>
-                                C#, .NET
-                            </td>
-                            <td>Referral</td>
-                            <td>Yes</td>
-                            <td>9011053276</td>
-                            <td>test1@gmail.com</td>
-                            <td>4</td>
-                            <td>60</td>
-                            <td><span class="badge badge-danger">Rejected</span></td>
-                        </tr>
-                        <tr>
-                            <td><a href="@Url.Action("CandidateDetails","Drives")">Sharique Nadeem</a></td>
-                            <td>
-                                C#, .NET
-                            </td>
-                            <td>Referral</td>
-                            <td>Yes</td>
-                            <td>9011053276</td>
-                            <td>test1@gmail.com</td>
-                            <td>4</td>
-                            <td>60</td>
-                            <td><span class="badge badge-success">Selected</span></td>
-                        </tr>
-                        <tr>
-                            <td><a href="@Url.Action("CandidateDetails","Drives")">Sharique Nadeem</a></td>
-                            <td>
-                                C#, .NET
-                            </td>
-                            <td>Referral</td>
-                            <td>Yes</td>
-                            <td>9011053276</td>
-                            <td>test1@gmail.com</td>
-                            <td>4</td>
-                            <td>60</td>
-                            <td><span class="badge badge-warning">No Show</span></td>
-                        </tr>
-                        <tr>
-                            <td><a href="@Url.Action("CandidateDetails","Drives")">Sharique Nadeem</a></td>
-                            <td>
-                                C#, .NET
-                            </td>
-                            <td>Referral</td>
-                            <td>Yes</td>
-                            <td>9011053276</td>
-                            <td>test1@gmail.com</td>
-                            <td>4</td>
-                            <td>60</td>
-                            <td><span class="badge badge-danger">Rejected</span></td>
-                        </tr>
-                        <tr>
-                            <td><a href="@Url.Action("CandidateDetails","Drives")">Sharique Nadeem</a></td>
-                            <td>
-                                C#, .NET
-                            </td>
-                            <td>Referral</td>
-                            <td>Yes</td>
-                            <td>9011053276</td>
-                            <td>test1@gmail.com</td>
-                            <td>4</td>
-                            <td>60</td>
-                            <td><span class="badge badge-success">Selected</span></td>
-                        </tr>
-                        <tr>
-                            <td><a href="@Url.Action("CandidateDetails","Drives")">Sharique Nadeem</a></td>
-                            <td>
-                                C#, .NET
-                            </td>
-                            <td>Referral</td>
-                            <td>Yes</td>
-                            <td>9011053276</td>
-                            <td>test1@gmail.com</td>
-                            <td>4</td>
-                            <td>60</td>
-                            <td><span class="badge badge-success">Selected</span></td>
-                        </tr>
-                        <tr>
-                            <td><a href="@Url.Action("CandidateDetails","Drives")">Sharique Nadeem</a></td>
-                            <td>
-                                C#, .NET
-                            </td>
-                            <td>Referral</td>
-                            <td>Yes</td>
-                            <td>9011053276</td>
-                            <td>test1@gmail.com</td>
-                            <td>4</td>
-                            <td>60</td>
-                            <td><span class="badge badge-info">In Progress</span></td>
-                        </tr>
-                        <tr>
-                            <td><a href="@Url.Action("CandidateDetails","Drives")">Sharique Nadeem</a></td>
-                            <td>
-                                C#, .NET
-                            </td>
-                            <td>Referral</td>
-                            <td>Yes</td>
-                            <td>9011053276</td>
-                            <td>test1@gmail.com</td>
-                            <td>4</td>
-                            <td>60</td>
-                            <td><span class="badge badge-success">Selected</span></td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div style="max-height: 60%; overflow: auto">
+                    <table id="drivesDetails" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Candidate Name</th>
+                                <th>Email</th>
+                                <th>Mobile Number</th>
+                                <th>Experience (Years)</th>
+                                <th>Skill Set</th>
+                                <th>Resume Link</th>
+                                <th>Notice Period</th>
+                                <th>Source</th>
+                                <th>Confirmed</th>
+                                <th>Current Org</th>
+                                <th>Meeting Link</th>
+                                <th>Interview Time</th>
+                                <th>Tech Panel</th>
+                                <th>Tech feedback</th>
+                                <th>Manager Panel</th>
+                                <th>Manager Feedback</th>
+                                <th>HR Panel</th>
+                                <th>HR Feedback</th>
+                                <th>Feedback Form</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (Candidate candidate in Model)
+                            {
+                                <tr>
+                                    <td>@candidate.Name</td>
+                                    <td>@candidate.Email</td>
+                                    <td>@candidate.MobileNumber</td>
+                                    <td>@candidate.Experience</td>
+                                    <td>@candidate.Skills</td>
+                                    <td>@candidate.ResumeLink</td>
+                                    <td>@candidate.NoticePeriod</td>
+                                    <td>@candidate.Source</td>
+                                    <td>@candidate.Confirmed</td>
+                                    <td>@candidate.CurrentOrganization</td>
+                                    <td>@candidate.MeetingLink</td>
+                                    <td>@candidate.FormattedInterviewTime</td>
+                                    <td>@candidate.TechnicalPanel</td>
+                                    <td>@candidate.TechnicalPanelFeedback</td>
+                                    <td>@candidate.ManagerPanel</td>
+                                    <td>@candidate.ManagerPanelFeedback</td>
+                                    <td>@candidate.HRPanel</td>
+                                    <td>@candidate.HRPanelFeedback</td>
+                                    <td>@candidate.FeedbackForm</td>
+                                    @*<td><span class="badge badge-warning">No Show</span></td>*@
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
             </div>
             <!-- /.card-body -->
         </div>

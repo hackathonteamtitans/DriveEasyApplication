@@ -10,6 +10,7 @@ using Google.Apis.Util.Store;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -91,24 +92,83 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
 
         public IActionResult Index()
         {
-            // SheetsService sheetsService = CreateSheetsService();
-            // IEnumerable<Candidate> Candidates = FetchSpreadsheetData(sheetsService).Result;
-            // SendInvites();
-            // return View(Candidates);
-            return View(new DriveDetailsViewModel());
-            // We need Drive ID for storing in table
-            //SheetsService sheetsService = CreateSheetsService();
-            //IEnumerable<Candidate> Candidates = FetchSpreadsheetData(sheetsService).Result;
-            //// Save Database
-            //IEasyDriveDbService dbService = new EasyDriveDbServices();
-            //dbService.Add<Candidate>(Candidates.ToList());
-            //SendInvites();
-            //return View(Candidates);
+            try
+            {
+                List<Drive> drivesList = new List<Drive>();
+                using (EasyDriveDbServices easyDriveDbServices = new EasyDriveDbServices())
+                {
+                    var result = easyDriveDbServices.ReadTableAsList("Drive");
+                    if (result != null && result.Count > 0)
+                    {
+                        foreach (DataRow dr in result)
+                        {
+                            Drive drive = new Drive();
+                            drive.DriveID = Convert.ToInt32(dr["DriveID"]);
+                            drive.Name = (string)dr["Name"];
+                            drive.DriveDate = DateTime.ParseExact((string)dr["DriveDate"], "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                            drive.Department = (string)dr["Department"];
+                            drive.Organizer = (string)dr["Organizer"];
+                            drive.Status = (string)dr["DriveStatus"];
+                            drive.DriveStartTime = DateTime.ParseExact((string)dr["DriveStartTime"], "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture);
+                            drive.DriveEndTime = DateTime.ParseExact((string)dr["DriveEndTime"], "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture);
+                            drive.BreakStartTime = DateTime.ParseExact((string)dr["BreakStartTime"], "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture);
+                            drive.BreakEndTime = DateTime.ParseExact((string)dr["BreakEndTime"], "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture);
+                            drivesList.Add(drive);
+                        }
+                    }
+                }
+                return View(drivesList);
+            }
+            catch(Exception ex)
+            {
+                return RedirectToAction("Error", "Home");
+            }
         }
 
-        public IActionResult DrivesDetails()
+        public IActionResult DrivesDetails(string driveId)
         {
-            return View();
+            try
+            {
+                List<Candidate> candidatesList = new List<Candidate>();
+                using (EasyDriveDbServices easyDriveDbServices = new EasyDriveDbServices())
+                {
+                    string query = $"SELECT * FROM CANDIDATE WHERE FK_DRIVEID = {Convert.ToInt32(driveId)}";
+                    var result = easyDriveDbServices.ExecuteQuerryAsList(query);
+                    if (result != null && result.Count > 0)
+                    {
+                        foreach (DataRow dr in result)
+                        {
+                            Candidate candidate = new Candidate();
+                            candidate.CandidateID = Convert.ToInt32(dr["CandidateID"]);
+                            candidate.Name = (string)dr["Name"];
+                            candidate.MobileNumber = (string)dr["MobileNumber"];
+                            candidate.Skills = (string)dr["Skills"];
+                            candidate.Experience = (string)dr["Experience"];
+                            candidate.NoticePeriod = Convert.ToInt32(dr["NoticePeriod"]);
+                            candidate.Source = (string)dr["Source"];
+                            candidate.Confirmed = (string)dr["Confirmed"];
+                            candidate.CurrentOrganization = (string)dr["CurrentOrganization"];
+                            candidate.MeetingLink = dr["MeetingLink"] == DBNull.Value ?  string.Empty : (string)dr["MeetingLink"];
+                            candidate.FormattedInterviewTime = dr["InterviewTime"] == DBNull.Value ? string.Empty : DateTime.ParseExact((string)dr["InterviewTime"], "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture).ToLongDateString();
+                            candidate.TechnicalPanel = dr["TechnicalPanel"] == DBNull.Value ? string.Empty : (string)dr["TechnicalPanel"];
+                            candidate.TechnicalPanelFeedback = dr["TechnicalPanelFeedback"] == DBNull.Value ? string.Empty : (string)dr["TechnicalPanelFeedback"];
+                            candidate.ManagerPanel = dr["ManagerPanel"] == DBNull.Value ? string.Empty : (string)dr["ManagerPanel"];
+                            candidate.ManagerPanelFeedback = dr["ManagerPanelFeedback"] == DBNull.Value ? string.Empty : (string)dr["ManagerPanelFeedback"];
+                            candidate.HRPanel = dr["HRPanel"] == DBNull.Value ? string.Empty : (string)dr["HRPanel"];
+                            candidate.HRPanelFeedback = dr["HRPanelFeedback"] == DBNull.Value ? string.Empty : (string)dr["HRPanelFeedback"];
+                            candidate.FeedbackForm = dr["FeedbackForm"] == DBNull.Value ? string.Empty : (string)dr["FeedbackForm"];
+                            candidate.ResumeLink = (string)dr["ResumeLink"];
+                            candidate.Email = (string)dr["Email"];
+                            candidatesList.Add(candidate);
+                        }
+                    }
+                }
+                return View(candidatesList);
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Error", "Home");
+            }
         }
 
         public IActionResult CandidateDetails(int driveId)

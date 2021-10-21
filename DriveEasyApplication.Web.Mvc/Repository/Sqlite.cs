@@ -5,6 +5,7 @@
     using System.Collections.Generic;
     using System.Data;
     using System.IO;
+    using System.Linq;
 
     /// <summary>
     /// This class will be used during the SQLite Db connection and DB creation with the required the test data.
@@ -108,6 +109,11 @@
             return ExecuteQuerry($"SELECT * FROM {tableName}");
         }
 
+        public List<DataRow> ReadTableAsList(string tableName)
+        {
+            return ExecuteQuerry($"SELECT * FROM {tableName}").AsEnumerable().Cast<DataRow>().ToList();
+        }
+
         public DataTable ExecuteQuerry(string query)
         {
             SqliteDataReader sqlite_datareader;
@@ -120,6 +126,20 @@
             dataTable.Load(sqlite_datareader);
             connection.Close();
             return dataTable;
+        }
+
+        public List<DataRow> ExecuteQuerryAsList(string query)
+        {
+            SqliteDataReader sqlite_datareader;
+            SqliteCommand sqlite_cmd = connection.CreateCommand();
+
+            sqlite_cmd.CommandText = query;
+            connection.Open();
+            sqlite_datareader = sqlite_cmd.ExecuteReader();
+            DataTable dataTable = new DataTable();
+            dataTable.Load(sqlite_datareader);
+            connection.Close();
+            return dataTable.AsEnumerable().Cast<DataRow>().ToList();
         }
 
         public static void CreateDbFile(string dbName)

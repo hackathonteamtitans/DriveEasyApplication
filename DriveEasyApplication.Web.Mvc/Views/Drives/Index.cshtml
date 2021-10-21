@@ -1,4 +1,4 @@
-﻿@model DriveEasyApplication.Web.Mvc.Models.DriveDetailsViewModel
+﻿@model List<DriveEasyApplication.Web.Mvc.Models.Drive>
 @{
     ViewData["Title"] = "Scheduled Drive(s)";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -33,16 +33,18 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach (Drive drive in Model)
+                        {
                         <tr>
-                            <td>Drive1</td>
-                            <td>19/10/2021</td>
-                            <td>Merchant</td>
-                            <td>Sneha</td>
-                            <td>10:00 AM-6:00 PM</td>
-                            <td>1:00 PM-2:00 PM</td>
-                            <td><span class="badge badge-info">In progress</span></td>
-                            <td class="project-actions text-right">
-                                <a class="btn btn-primary btn-sm" href="@Url.Action("DrivesDetails","Drives")">
+                            <td>@drive.Name</td>
+                            <td>@drive.DriveDate</td>
+                            <td>@drive.Department</td>
+                            <td>@drive.Organizer</td>
+                            <td>@drive.DriveStartTime - @drive.DriveEndTime</td>
+                            <td>@drive.BreakStartTime - @drive.BreakEndTime</td>
+                            <td>@drive.Status</td>
+                            <td class="project-actions">
+                                <a class="btn btn-primary btn-sm" href="@Url.Action("DrivesDetails", "Drives", new { driveId = drive.DriveID })">
                                     <i class="fas fa-folder">
                                     </i>
                                     View
@@ -59,84 +61,7 @@
                                 </a>
                             </td>
                         </tr>
-                        <tr>
-                            <td>Drive2</td>
-                            <td>19/10/2021</td>
-                            <td>Merchant</td>
-                            <td>Sneha</td>
-                            <td>10:00 AM-6:00 PM</td>
-                            <td>1:00 PM-2:00 PM</td>
-                            <td><span class="badge badge-info">In progress</span></td>
-                            <td class="project-actions text-right">
-                                <a class="btn btn-primary btn-sm" href="@Url.Action("DrivesDetails","Drives")">
-                                    <i class="fas fa-folder">
-                                    </i>
-                                    View
-                                </a>
-                                <a class="btn btn-info btn-sm" href="#">
-                                    <i class="fas fa-pencil-alt">
-                                    </i>
-                                    Edit
-                                </a>
-                                <a class="btn btn-danger btn-sm" href="#">
-                                    <i class="fas fa-trash">
-                                    </i>
-                                    Delete
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Drive3</td>
-                            <td>19/10/2021</td>
-                            <td>Merchant</td>
-                            <td>Sneha</td>
-                            <td>10:00 AM-6:00 PM</td>
-                            <td>1:00 PM-2:00 PM</td>
-                            <td><span class="badge badge-success">Completed</span></td>
-                            <td class="project-actions text-right">
-                                <a class="btn btn-primary btn-sm" href="@Url.Action("DrivesDetails","Drives")">
-                                    <i class="fas fa-folder">
-                                    </i>
-                                    View
-                                </a>
-                                <a class="btn btn-info btn-sm" href="#">
-                                    <i class="fas fa-pencil-alt">
-                                    </i>
-                                    Edit
-                                </a>
-                                <a class="btn btn-danger btn-sm" href="#">
-                                    <i class="fas fa-trash">
-                                    </i>
-                                    Delete
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Drive4</td>
-                            <td>19/10/2021</td>
-                            <td>Merchant</td>
-                            <td>Sneha</td>
-                            <td>10:00 AM-6:00 PM</td>
-                            <td>1:00 PM-2:00 PM</td>
-                            <td><span class="badge badge-warning">Not Started</span></td>
-                            <td class="project-actions text-right">
-                                <a class="btn btn-primary btn-sm" href="@Url.Action("DrivesDetails","Drives")">
-                                    <i class="fas fa-folder">
-                                    </i>
-                                    View
-                                </a>
-                                <a class="btn btn-info btn-sm" href="#">
-                                    <i class="fas fa-pencil-alt">
-                                    </i>
-                                    Edit
-                                </a>
-                                <a class="btn btn-danger btn-sm" href="#">
-                                    <i class="fas fa-trash">
-                                    </i>
-                                    Delete
-                                </a>
-                            </td>
-                        </tr>
+                        }
                     </tbody>
                 </table>
             </div>
@@ -147,111 +72,6 @@
     <!-- /.col -->
 </div>
 
-<form asp-controller="Drives" asp-action="CreateDrive" method="post">
-    <div class="modal fade" id="modal-lg">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Drive</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="card card-primary">
-                                <div class="card-header">
-                                    <h3 class="card-title">Information</h3>
-                                    <div class="card-tools">
-                                        <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                                            <i class="fas fa-minus"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="card-body">
-                                    <div class="form-group">
-                                        <label asp-for="Name"></label>
-                                        <input type="text" id="inputName" asp-for="Name" class="form-control">
-                                    </div>
-                                    <div class="form-group">
-                                        <label asp-for="Organizer"></label>
-                                        <input type="text" id="inputOrganizer" asp-for="Organizer" class="form-control">
-                                    </div>
-                                    <div class="form-group">
-                                        <label asp-for="Department"></label>
-                                        <input type="text" id="inputDepartment" asp-for="Department"  class="form-control">
-                                    </div>
-                                    <div class="form-group">
-                                        <label asp-for="SheetLink"></label>
-                                        <input type="text" id="inputCopySheet" asp-for="SheetLink" class="form-control">
-                                    </div>
-                                    <div class="form-group">
-                                        <label asp-for="DriveDate"></label>
-                                        <div class="input-group date" id="reservationdate" data-target-input="nearest">
-                                            <input type="text" asp-for="DriveDate" class="form-control datetimepicker-input" data-target="#reservationdate" />
-                                            <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
-                                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label asp-for="DriveStartTime"></label>
-                                        <div class="input-group date" id="reservationdatetime1" data-target-input="nearest">
-                                            <input type="text" asp-for="DriveStartTime" class="form-control datetimepicker-input" data-target="#reservationdatetime1" />
-                                            <div class="input-group-append" data-target="#reservationdatetime1" data-toggle="datetimepicker">
-                                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label asp-for="DriveEndTime"></label>
-                                        <div class="input-group date" id="reservationdatetime2" data-target-input="nearest">
-                                            <input type="text" asp-for="DriveEndTime" class="form-control datetimepicker-input" data-target="#reservationdatetime2" />
-                                            <div class="input-group-append" data-target="#reservationdatetime2" data-toggle="datetimepicker">
-                                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label asp-for="BreakStartTime"></label>
-                                        <div class="input-group date" id="reservationdatetime3" data-target-input="nearest">
-                                            <input type="text" asp-for="BreakStartTime" class="form-control datetimepicker-input" data-target="#reservationdatetime3" />
-                                            <div class="input-group-append" data-target="#reservationdatetime3" data-toggle="datetimepicker">
-                                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label asp-for="BreakEndTime"></label>
-                                        <div class="input-group date" id="reservationdatetime4" data-target-input="nearest">
-                                            <input type="text" asp-for="BreakEndTime" class="form-control datetimepicker-input" data-target="#reservationdatetime4" />
-                                            <div class="input-group-append" data-target="#reservationdatetime4" data-toggle="datetimepicker">
-                                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label asp-for="DriveStatus"></label>
-                                        <select asp-for="DriveStatus" class="form-control custom-select" asp-items="Html.GetEnumSelectList<DriveStatus>()"></select>
-                                    </div>
-                                </div>
-                                <!-- /.card-body -->
-                            </div>
-                            <!-- /.card -->
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save changes</button>
-                </div>
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
-</form>
 
 @section scripts{
     <script>

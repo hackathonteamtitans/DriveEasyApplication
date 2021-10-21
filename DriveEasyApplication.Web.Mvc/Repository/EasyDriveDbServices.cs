@@ -3,11 +3,17 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Reflection;
+using System.ComponentModel;
 
 namespace DriveEasyApplication.Web.Mvc.Services
 {
-    public class EasyDriveDbServices : Sqlite, IEasyDriveDbService
+    public class EasyDriveDbServices : Sqlite, IEasyDriveDbService, IDisposable
     {
+        private bool disposed = false;
+
+        private IntPtr handle;
+
+        private Component component = new Component();
         public EasyDriveDbServices() : base("EasyDrive")
         {
 
@@ -73,7 +79,7 @@ namespace DriveEasyApplication.Web.Mvc.Services
             }
         }
 
-        private static List<T> ConvertDataTable<T>(DataTable dt)
+        public static List<T> ConvertDataTable<T>(DataTable dt)
         {
             List<T> data = new List<T>();
             foreach (DataRow row in dt.Rows)
@@ -115,6 +121,53 @@ namespace DriveEasyApplication.Web.Mvc.Services
         public void Delete<T>(string id)
         {
             throw new NotImplementedException();
+        }
+
+        public void Dispose()
+        {
+            Dispose(disposing: true);
+            // This object will be cleaned up by the Dispose method.
+            // Therefore, you should call GC.SuppressFinalize to
+            // take this object off the finalization queue
+            // and prevent finalization code for this object
+            // from executing a second time.
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            // Check to see if Dispose has already been called.
+            if (!this.disposed)
+            {
+                // If disposing equals true, dispose all managed
+                // and unmanaged resources.
+                if (disposing)
+                {
+                    // Dispose managed resources.
+                    component.Dispose();
+                }
+
+                // Call the appropriate methods to clean up
+                // unmanaged resources here.
+                // If disposing is false,
+                // only the following code is executed.
+                CloseHandle(handle);
+                handle = IntPtr.Zero;
+
+                // Note disposing has been done.
+                disposed = true;
+            }
+        }
+
+        [System.Runtime.InteropServices.DllImport("Kernel32")]
+        private extern static Boolean CloseHandle(IntPtr handle);
+
+        ~EasyDriveDbServices()
+        {
+            // Do not re-create Dispose clean-up code here.
+            // Calling Dispose(disposing: false) is optimal in terms of
+            // readability and maintainability.
+            Dispose(disposing: false);
         }
     }
 }
