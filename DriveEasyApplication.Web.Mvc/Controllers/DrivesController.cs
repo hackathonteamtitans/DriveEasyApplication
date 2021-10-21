@@ -143,11 +143,11 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
             };
             try
             {
-                var k = _easyDriveDbService.GetPanel("Department", "Merchant");
+                var k = _easyDriveDbService.GetPanel("PanelID", "1");
             }
             catch (Exception ex)
             {
-                throw ex;
+
             }
 
             // Read Spreadsheet

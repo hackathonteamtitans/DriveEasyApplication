@@ -9,8 +9,6 @@ namespace DriveEasyApplication.Web.Mvc.Services
 
         void Add<T>(IList<T> data);
 
-        IList<T> Get<T>(string id);
-
         void Edit<T>(T data);
 
         void Delete<T>(string id);

@@ -1,8 +1,10 @@
 ﻿using DriveEasyApplication.Web.Mvc.Models;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Reflection;
+using System.Xml.Linq;
 
 namespace DriveEasyApplication.Web.Mvc.Services
 {
@@ -119,17 +121,12 @@ namespace DriveEasyApplication.Web.Mvc.Services
             throw new NotImplementedException();
         }
 
-        public IList<T> Get<T>(string id)
+        public void Delete<T>(string id)
         {
             throw new NotImplementedException();
         }
 
         public void Edit<T>(T data)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Delete<T>(string id)
         {
             throw new NotImplementedException();
         }

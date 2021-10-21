@@ -14,24 +14,24 @@ namespace DriveEasyApplication.Web.Mvc.Models
             Name = (string)dataRow["Name"];
             Email = dataRow["Email"].ToString();
             MobileNumber = (string)dataRow["MobileNumber"];
-            EmployeeID = Convert.ToInt32(dataRow["EmployeeID"]);
+            EmployeeID = dataRow["EmployeeID"].ToString();
             Skills = (string)dataRow["Skills"];
-            Manager = (string)dataRow["Manager"];
-            Department = (string)dataRow["Department"];
-            PanelType = (PanelType)dataRow["PanelType"];
-            Experience = (string)dataRow["Experience"];
-            Title = (string)dataRow["Title"];
+            Manager = dataRow["Manager"].ToString();
+            Department = dataRow["Department"].ToString();
+            PanelType = dataRow["PanelType"].ToString();
+            Experience = dataRow["Experience"].ToString();
+            Title = dataRow["Title"].ToString();
         }
 
         public int PanelID { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
         public string MobileNumber { get; set; }
-        public int EmployeeID { get; set; }
+        public string EmployeeID { get; set; }
         public string Skills { get; set; }
         public string Manager { get; set; }
         public string Department { get; set; }
-        public PanelType PanelType { get; set; }
+        public string PanelType { get; set; }
         public string Experience { get; set; }
         public string Title { get; set; }
 
