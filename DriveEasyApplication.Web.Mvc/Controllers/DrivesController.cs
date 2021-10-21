@@ -1,4 +1,5 @@
 ﻿using DriveEasyApplication.Web.Mvc.Models;
+using DriveEasyApplication.Web.Mvc.Services;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Calendar.v3;
 using Google.Apis.Calendar.v3.Data;
@@ -87,6 +88,9 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
         {
             SheetsService sheetsService = CreateSheetsService();
             IEnumerable<Candidate> Candidates = FetchSpreadsheetData(sheetsService).Result;
+            // Save Database
+            IEasyDriveDbService dbService = new EasyDriveDbServices();
+            dbService.Add<Candidate>(Candidates.ToList());
             //SendInvites();
             return View(Candidates);
         }
@@ -177,9 +181,10 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
 
         public IActionResult SendInvites()
         {   
-            List<Candidate> interviewDatas = RunPanelAssignementAlgo(drive, Candidates, panelDetails);
-            List<Candidate> updatedInterviewDatas = CreateCalendarEventsData(interviewDatas);
-            return View(updatedInterviewDatas);
+            List<Candidate> candidates = RunPanelAssignementAlgo(drive, Candidates, panelDetails);
+            List<Candidate> updatedCandidates = CreateCalendarEventsData(candidates);
+            // Save Database
+            return View(updatedCandidates);
         }
 
         public List<Candidate> RunPanelAssignementAlgo(Drive drive, List<Candidate> candidates, List<PanelDetail> panelDetails)

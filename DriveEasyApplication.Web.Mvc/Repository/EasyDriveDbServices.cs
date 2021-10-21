@@ -23,7 +23,7 @@ namespace DriveEasyApplication.Web.Mvc.Services
             switch (data)
             {
                 case Candidate candidate:
-                    InsertData(DbName, "Candidates", candidate.ToDictionary());
+                    InsertData(DbName, "Candidate", candidate.ToDictionary());
                     break;
                 case Drive drive:
                     InsertData(DbName, "Drive", drive.ToDictionary());
@@ -98,6 +98,21 @@ namespace DriveEasyApplication.Web.Mvc.Services
                 }
             }
             return obj;
+        }
+
+        public IList<T> Get<T>(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Edit<T>(T data)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Delete<T>(string id)
+        {
+            throw new NotImplementedException();
         }
     }
 }
