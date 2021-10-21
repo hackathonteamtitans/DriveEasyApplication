@@ -304,7 +304,7 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
 
             body.Location = "Avengers Mansion";
             body.Summary = "Invitation to interview – TSYS / Interview with " + candidate.TechnicalPanel;
-            body.Description = "Test"; // GetEventDescription(candidate);
+            body.Description = GetEventDescription(candidate);
             EventsResource.InsertRequest request = new EventsResource.InsertRequest(_service, body, "hackathonteamtitans@gmail.com");
             request.ConferenceDataVersion = 1;
             Event response = request.Execute();
