@@ -16,11 +16,30 @@ namespace DriveEasyApplication.Web.Mvc.Models
         public string Manager { get; set; }
         public string Department { get; set; }
         public PanelType PanelType { get; set; }
+
+        public string PanelRole { get; set; }
         public string Experience { get; set; }
         public string Title { get; set; }
         public int ID { get; set; }        
         public int DriveID { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
+
+        public Dictionary<string, object> ToDictionary()
+        {
+            Dictionary<string, object> KeyValuePairs = new Dictionary<string, object>();
+            KeyValuePairs.Add("PanelID", PanelID.ToString());
+            KeyValuePairs.Add("Name", Name);
+            KeyValuePairs.Add("Email", Email);
+            KeyValuePairs.Add("MobileNumber", MobileNumber.ToString());
+            KeyValuePairs.Add("EmployeeID", EmployeeID.ToString());
+            KeyValuePairs.Add("Skills", Skills);
+            KeyValuePairs.Add("Manager", Manager);
+            KeyValuePairs.Add("Department", Department);
+            KeyValuePairs.Add("PanelType", PanelRole.ToString());
+            KeyValuePairs.Add("Experience", Experience);
+            KeyValuePairs.Add("Title", Title);
+            return KeyValuePairs;
+        }
     }
 }

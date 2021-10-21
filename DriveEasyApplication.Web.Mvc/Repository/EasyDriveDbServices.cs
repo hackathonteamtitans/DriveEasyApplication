@@ -39,6 +39,9 @@ namespace DriveEasyApplication.Web.Mvc.Services
                 case Panel panel:
                     return InsertData(DbName, "Panel", panel.ToDictionary());
                     break;
+                case PanelDetail panelDetails:
+                    return InsertData(DbName, "Panel", panelDetails.ToDictionary());
+                    break;
                 case PanelAvailability panelAvailability:
                     return InsertData(DbName, "PanelAvailability", panelAvailability.ToDictionary());
                     break;
