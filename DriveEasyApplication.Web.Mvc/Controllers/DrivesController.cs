@@ -143,11 +143,11 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
             };
             try
             {
-                driveID = _easyDriveDbService.Add<Drive>(drive);
+                var k = _easyDriveDbService.GetPanel("PanelID", "1");
             }
             catch (Exception ex)
             {
-                throw ex;
+
             }
 
             // Read Spreadsheet
