@@ -21,7 +21,13 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
 {
     public class DrivesController : Controller
     {
-        static string[] Scopes = { SheetsService.Scope.SpreadsheetsReadonly };
+        static string[] Scopes = {
+            SheetsService.Scope.SpreadsheetsReadonly,
+            CalendarService.Scope.Calendar,
+            CalendarService.Scope.CalendarEvents,
+            CalendarService.Scope.CalendarEventsReadonly
+        };
+
         static string ApplicationName = "Interview Drive Google Sheets";
         List<Candidate> Candidates = new List<Candidate>();
 
@@ -85,6 +91,7 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
             // return View(Candidates);
             return View();
         }
+
         public IActionResult DrivesDetails()
         {
             return View();
@@ -174,11 +181,11 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
             return Candidates;
         }
 
-        public void SendInvites()
+        public IActionResult SendInvites()
         {   
             List<Candidate> interviewDatas = RunPanelAssignementAlgo(drive, Candidates, panelDetails);
             List<Candidate> updatedInterviewDatas = CreateCalendarEventsData(interviewDatas);
-            //return View(updatedInterviewDatas);
+            return View(updatedInterviewDatas);
         }
 
         public List<Candidate> RunPanelAssignementAlgo(Drive drive, List<Candidate> candidates, List<PanelDetail> panelDetails)
@@ -239,12 +246,6 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
             CalendarService service = null;
             try
             {
-                string[] Scopes = {
-                    CalendarService.Scope.Calendar,
-                    CalendarService.Scope.CalendarEvents,
-                    CalendarService.Scope.CalendarEventsReadonly                    
-                };
-
                 UserCredential credential;
                 string keyfilepath = AppContext.BaseDirectory;
                 keyfilepath = "credentials.json";
