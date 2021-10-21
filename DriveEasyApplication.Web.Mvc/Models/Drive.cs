@@ -7,20 +7,29 @@ namespace DriveEasyApplication.Web.Mvc.Models
 {
     public class Drive
     {
-        public int DriveID { get; set; }
+        public int? DriveID { get; set; }
         public string Name { get; set; }
+        public string Organizer { get; set; }
+        public string SheetLink { get; set; }
         public DateTime DriveDate { get; set; }
         public string Department { get; set; }
         public DateTime DriveStartTime { get; set; }
         public DateTime DriveEndTime { get; set; }
         public DateTime BreakStartTime { get; set; }
         public DateTime BreakEndTime { get; set; }
+        public int DriveStatus { get; set; }
 
         public Dictionary<string, object> ToDictionary()
         {
             Dictionary<string, object> keyValuePair = new Dictionary<string, object>();
-            keyValuePair.Add("DriveID", DriveID.ToString());
+            if (DriveID != null)
+            {
+                keyValuePair.Add("DriveID", DriveID.ToString());
+            }            
             keyValuePair.Add("Name", Name);
+            keyValuePair.Add("Organizer", Organizer);
+            keyValuePair.Add("SheetLink", SheetLink);
+            keyValuePair.Add("DriveStatus", DriveStatus.ToString());
             keyValuePair.Add("DriveDate", DriveDate.ToString());
             keyValuePair.Add("Department", Department);
             keyValuePair.Add("DriveStartTime", DriveStartTime.ToString());
