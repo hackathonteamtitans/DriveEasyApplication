@@ -1,8 +1,10 @@
 ﻿using DriveEasyApplication.Web.Mvc.Models;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Reflection;
+using System.Xml.Linq;
 using System.ComponentModel;
 
 namespace DriveEasyApplication.Web.Mvc.Services
@@ -108,17 +110,29 @@ namespace DriveEasyApplication.Web.Mvc.Services
             return obj;
         }
 
-        public IList<T> Get<T>(string id)
+        public List<Panel> GetPanel(string colName, object value)
         {
-            throw new NotImplementedException();
+            List<Panel> panel = new List<Panel>();
+            DataTable dataTable = ExecuteQuerry($"Select * from Panel where {colName} = '{value}'");
+
+            foreach (DataRow row in dataTable.Rows)
+            {
+                panel.Add(new Panel(row));
+            }
+            return panel;
         }
 
-        public void Edit<T>(T data)
+        public List<Candidate> GetCandidate(string colName, object value)
         {
             throw new NotImplementedException();
         }
 
         public void Delete<T>(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Edit<T>(T data)
         {
             throw new NotImplementedException();
         }

@@ -1,12 +1,41 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace DriveEasyApplication.Web.Mvc.Models
 {
     public class Candidate
-    {   
+    {
+        public Candidate() { }
+        public Candidate(DataRow dataRow)
+        {
+            SrNo = (int)dataRow["SrNo"];
+            CandidateID = (int)dataRow["CandidateID"];
+            Name = (string)dataRow["dataRow"];
+            MobileNumber = (string)dataRow["MobileNumber"];
+            Skills = (string)dataRow["Skills"];
+            Experience = (string)dataRow["Experience"];
+            NoticePeriod = (int)dataRow["NoticePeriod"];
+            Source = (string)dataRow["Source"];
+            Confirmed = (Show)dataRow["Confirmed"];
+            CurrentOrganization = (string)dataRow["CurrentOrganization"];
+            MeetingLink = (string)dataRow["MeetingLink"];
+            InterviewTime = (DateTime)dataRow["InterviewTime"];
+            TechnicalPanel = (string)dataRow["TechnicalPanel"];
+            TechnicalPanelFeedback = (string)dataRow["TechnicalPanelFeedback"];
+            ManagerPanel = (string)dataRow["TechnicalPanelFeedback"];
+            ManagerPanelFeedback = (string)dataRow["TechnicalPanelFeedback"];
+            HRPanel = (string)dataRow["TechnicalPanelFeedback"];
+            HRPanelFeedback = (string)dataRow["TechnicalPanelFeedback"];
+            FeedbackForm = (string)dataRow["TechnicalPanelFeedback"];
+            ResumeLink = (string)dataRow["TechnicalPanelFeedback"];
+            Email = (string)dataRow["TechnicalPanelFeedback"];
+            FromTime = (DateTime)dataRow["TechnicalPanelFeedback"];
+            ToTime = (DateTime)dataRow["TechnicalPanelFeedback"];
+        }
+        public int SrNo { get; set; }
         public int CandidateID { get; set; }
         public string Name { get; set; }
         public string MobileNumber { get; set; }
