@@ -140,29 +140,38 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
         public List<Drive> GetDriveDetails()
         {
             List<Drive> drivesList = new List<Drive>();
-            using (EasyDriveDbServices easyDriveDbServices = new EasyDriveDbServices())
+            try
             {
-                var result = easyDriveDbServices.ReadTableAsList("Drive");
-                if (result != null && result.Count > 0)
+                using (EasyDriveDbServices easyDriveDbServices = new EasyDriveDbServices())
                 {
-                    foreach (DataRow dr in result)
+                    //var result = easyDriveDbServices.ReadTableAsList("Drive");
+                    var dbData = easyDriveDbServices.ReadTable("Drive");
+                    var result  = dbData.AsEnumerable().Cast<DataRow>().ToList();
+                    if (result != null && result.Count > 0)
                     {
-                        Drive drive = new Drive();
-                        drive.DriveID = Convert.ToInt32(dr["DriveID"]);                        
-                        drive.Name = (string)dr["Name"];
-                        drive.DriveDate = Convert.ToDateTime((string)dr["DriveDate"]); 
-                        drive.Department = (string)dr["Department"];
-                        drive.Organizer = (string)dr["Organizer"];
-                        drive.Status = (string)dr["DriveStatus"];
-                        drive.DriveStatus = (int)Enum.Parse(typeof(DriveStatus), drive.Status);
-                        drive.DriveStartTime = Convert.ToDateTime((string)dr["DriveStartTime"]);
-                        drive.DriveEndTime = Convert.ToDateTime((string)dr["DriveEndTime"]);
-                        drive.BreakStartTime = Convert.ToDateTime((string)dr["BreakStartTime"]);
-                        drive.BreakEndTime = Convert.ToDateTime((string)dr["BreakEndTime"]);
-                        drivesList.Add(drive);
+                        foreach (DataRow dr in result)
+                        {
+                            Drive drive = new Drive();
+                            drive.DriveID = Convert.ToInt32(dr["DriveID"]);
+                            drive.Name = (string)dr["Name"];
+                            drive.DriveDate = Convert.ToDateTime((string)dr["DriveDate"]);
+                            drive.Department = (string)dr["Department"];
+                            drive.Organizer = (string)dr["Organizer"];
+                            drive.Status = (string)dr["DriveStatus"];
+                            drive.DriveStatus = (int)Enum.Parse(typeof(DriveStatus), drive.Status);
+                            drive.DriveStartTime = Convert.ToDateTime((string)dr["DriveStartTime"]);
+                            drive.DriveEndTime = Convert.ToDateTime((string)dr["DriveEndTime"]);
+                            drive.BreakStartTime = Convert.ToDateTime((string)dr["BreakStartTime"]);
+                            drive.BreakEndTime = Convert.ToDateTime((string)dr["BreakEndTime"]);
+                            drivesList.Add(drive);
+                        }
                     }
                 }
             }
+            catch (Exception ex)
+            {
+                throw ex;
+            }            
 
             return drivesList;
         }
@@ -192,7 +201,7 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
                             candidate.Confirmed = (string)dr["Confirmed"];
                             candidate.CurrentOrganization = (string)dr["CurrentOrganization"];
                             candidate.MeetingLink = dr["MeetingLink"] == DBNull.Value ? string.Empty : (string)dr["MeetingLink"];
-                            candidate.FormattedInterviewTime = dr["InterviewTime"] == DBNull.Value ? string.Empty : DateTime.ParseExact((string)dr["InterviewTime"], "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture).ToString("dd/MM/yyyy hh:mm tt");
+                            candidate.FormattedInterviewTime = dr["InterviewTime"] == DBNull.Value || dr["InterviewTime"].ToString().Trim() == "" ? string.Empty : DateTime.ParseExact((string)dr["InterviewTime"], "MM/dd/yyyy HH:mm:ss tt", CultureInfo.InvariantCulture).ToString("dd/MM/yyyy hh:mm tt");
                             candidate.TechnicalPanel = dr["TechnicalPanel"] == DBNull.Value ? string.Empty : (string)dr["TechnicalPanel"];
                             candidate.TechnicalPanelFeedback = dr["TechnicalPanelFeedback"] == DBNull.Value ? string.Empty : (string)dr["TechnicalPanelFeedback"];
                             candidate.ManagerPanel = dr["ManagerPanel"] == DBNull.Value ? string.Empty : (string)dr["ManagerPanel"];
@@ -309,13 +318,15 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
         {
             List<Candidate> Candidates = new List<Candidate>();
             // Define request parameters.
-            String spreadsheetId = "1_T-8hgakOdeWE0xCMCYwNvDuSGvPWPb16jPic2ZvXhA";
-            String range = "Drive!A2:K";
+            String spreadsheetId = "1dxIixDj9ypI3U39OLBSN4JnEHzhTxd3b90IwtO92DsI";
+            //String spreadsheetId = "1_T-8hgakOdeWE0xCMCYwNvDuSGvPWPb16jPic2ZvXhA";
+              String range = "Drive!A2:K";
             SpreadsheetsResource.ValuesResource.GetRequest request =
                     sheetsService.Spreadsheets.Values.Get(spreadsheetId, range);
 
             // Prints the names and majors of students in a sample spreadsheet:
             // https://docs.google.com/spreadsheets/d/1_T-8hgakOdeWE0xCMCYwNvDuSGvPWPb16jPic2ZvXhA/edit
+            // https://docs.google.com/spreadsheets/d/1dxIixDj9ypI3U39OLBSN4JnEHzhTxd3b90IwtO92DsI/edit
             ValueRange response = request.Execute();
             IList<IList<Object>> values = response.Values;
             List<Candidate> data = new List<Candidate>();
@@ -492,7 +503,7 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
             body.Location = "Avengers Mansion";
             body.Summary = "Invitation to interview – TSYS / Interview with " + candidate.TechnicalPanel;
             body.Description = GetEventDescription(candidate);
-            EventsResource.InsertRequest request = new EventsResource.InsertRequest(_service, body, "hackathonteamtitans@gmail.com");
+            EventsResource.InsertRequest request = new EventsResource.InsertRequest(_service, body, "hackathonteamtitansprod@gmail.com");
             request.ConferenceDataVersion = 1;
             Event response = request.Execute();
             candidate.MeetingLink = response.HangoutLink;

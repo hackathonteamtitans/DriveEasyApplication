@@ -45,7 +45,7 @@ namespace DriveEasyApplication.Web.Mvc.Models
         public string CurrentOrganization { get; set; }
         public long FK_DriveID { get; set; }
         public string MeetingLink { get; set; }
-        public DateTime InterviewTime { get; set; }        
+        public DateTime? InterviewTime { get; set; }        
         public int CandidateStatus { get; set; }
         public string FormattedInterviewTime { get; set; }
         public string TechnicalPanel { get; set; }

@@ -68,7 +68,7 @@
                                 @if (isScheduled)
                                 {
                                 <td>
-                                @if (string.IsNullOrEmpty(@candidate.MeetingLink))
+                                @if (!string.IsNullOrEmpty(@candidate.MeetingLink))
                                 {
                                     <a href="@candidate.MeetingLink" target="_blank">Join Meeting</a>
                                 }

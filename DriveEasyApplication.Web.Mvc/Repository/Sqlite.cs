@@ -18,7 +18,8 @@
         public Sqlite(string dbName)
         {
             DbName = dbName;
-            string dbPath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + $"\\resources\\Database\\{dbName}.sqlite";
+            //string dbPath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + $"\\resources\\Database\\{dbName}.sqlite";
+            string dbPath = Directory.GetParent(System.Reflection.Assembly.GetExecutingAssembly().Location).Parent.Parent.Parent.FullName + $"\\resources\\Database\\{dbName}.sqlite";
             if (!File.Exists(dbPath))
             {
                 throw new FileNotFoundException($"Unable to find  : -> {dbPath}");
@@ -136,7 +137,7 @@
             sqlite_datareader = sqlite_cmd.ExecuteReader();
             DataTable dataTable = new DataTable();
             dataTable.Load(sqlite_datareader);
-            connection.Close();
+            connection.Close();            
             return dataTable;
         }
 
