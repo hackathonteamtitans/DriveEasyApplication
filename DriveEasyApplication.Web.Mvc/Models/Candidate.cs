@@ -46,7 +46,7 @@ namespace DriveEasyApplication.Web.Mvc.Models
         public string Source { get; set; }
         public Show Confirmed { get; set; }
         public string CurrentOrganization { get; set; }
-        public int DriveID { get; set; }
+        public long FK_DriveID { get; set; }
         public string MeetingLink { get; set; }
         public DateTime InterviewTime { get; set; }
         public string TechnicalPanel { get; set; }
@@ -60,9 +60,11 @@ namespace DriveEasyApplication.Web.Mvc.Models
         public string Email { get; set; }
         public DateTime? FromTime { get; set; }
         public DateTime? ToTime { get; set; }
-        public Dictionary<string, string> ToDictionary()
+
+
+        public Dictionary<string, object> ToDictionary()
         {
-            Dictionary<string, string> keyValuePairs = new Dictionary<string, string>();
+            Dictionary<string, object> keyValuePairs = new Dictionary<string, object>();
             keyValuePairs.Add("CandidateID", CandidateID.ToString());
             keyValuePairs.Add("Name", Name);
             keyValuePairs.Add("Email", Email);
@@ -72,8 +74,8 @@ namespace DriveEasyApplication.Web.Mvc.Models
             keyValuePairs.Add("NoticePeriod", NoticePeriod.ToString());
             keyValuePairs.Add("Source", Source);
             keyValuePairs.Add("Confirmed", Confirmed.ToString());
-            keyValuePairs.Add("CurrentOrganization", CurrentOrganization);
-            keyValuePairs.Add("DriveID", DriveID.ToString());
+            keyValuePairs.Add("CurrentOrganization", CurrentOrganization);            
+            keyValuePairs.Add("FK_DriveID", FK_DriveID.ToString());
             keyValuePairs.Add("MeetingLink", MeetingLink);
             keyValuePairs.Add("InterviewTime", InterviewTime.ToString());
             keyValuePairs.Add("TechnicalPanel", TechnicalPanel);

@@ -19,13 +19,13 @@ namespace DriveEasyApplication.Web.Mvc.Models
         public DateTime BreakEndTime { get; set; }
         public int DriveStatus { get; set; }
 
-        public Dictionary<string, string> ToDictionary()
+        public Dictionary<string, object> ToDictionary()
         {
-            Dictionary<string, string> keyValuePair = new Dictionary<string, string>();
+            Dictionary<string, object> keyValuePair = new Dictionary<string, object>();
             if (DriveID != null)
             {
                 keyValuePair.Add("DriveID", DriveID.ToString());
-            }
+            }            
             keyValuePair.Add("Name", Name);
             keyValuePair.Add("Organizer", Organizer);
             keyValuePair.Add("SheetLink", SheetLink);

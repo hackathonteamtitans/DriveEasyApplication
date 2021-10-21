@@ -63,19 +63,44 @@
             return result;
         }
 
-        public static int InsertData(string dbName, string tableName, Dictionary<string, string> columNamesValues)
+        public static long ExecuteScalar(string dbName, string query)
+        {
+            string dbPath = Directory.GetParent(System.Reflection.Assembly.GetExecutingAssembly().Location).Parent.Parent.Parent.FullName + $"\\resources\\Database\\{dbName}.sqlite";
+            if (!File.Exists(dbPath))
+            {
+                throw new FileNotFoundException($"Unable to find  : -> {dbPath}");
+            }
+
+            var connection = new SqliteConnection($"Data Source={dbPath}");
+            connection.Open();
+            SqliteCommand sqlite_cmd = connection.CreateCommand();
+            sqlite_cmd.CommandText = query;
+            connection.Open();
+            object obj = sqlite_cmd.ExecuteScalar();
+            long id = (long)obj;
+            connection.Close();
+            return id;
+        }
+
+        public static long InsertData(string dbName, string tableName, Dictionary<string, object> columNamesValues)
         {
             string query = string.Empty;
             string columns = string.Empty;
             string values = string.Empty;
 
-            foreach (KeyValuePair<string, string> columnNameValue in columNamesValues)
+            foreach (KeyValuePair<string, object> columnNameValue in columNamesValues)
             {
                 columns += $"{ columnNameValue.Key},";
-                values += $"'{ columnNameValue.Value}',";
+                if (tableName == "Candidate" && columnNameValue.Key.Contains("FK_"))
+                {
+                    values += $"{ columnNameValue.Value},";
+                }
+                else
+                    values += $"'{ columnNameValue.Value}',";
             }
 
-            return ExecuteNonQuerry(dbName, $"INSERT INTO {tableName} ({columns.TrimEnd(',')}) VALUES({values.TrimEnd(',')});");
+
+            return ExecuteScalar(dbName, $"INSERT INTO {tableName} ({columns.TrimEnd(',')}) VALUES({values.TrimEnd(',')}); SELECT last_insert_rowid();");
         }
 
         public DataTable ReadTable(string tableName)

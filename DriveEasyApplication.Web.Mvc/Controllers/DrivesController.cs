@@ -96,6 +96,14 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
             // SendInvites();
             // return View(Candidates);
             return View(new DriveDetailsViewModel());
+            // We need Drive ID for storing in table
+            //SheetsService sheetsService = CreateSheetsService();
+            //IEnumerable<Candidate> Candidates = FetchSpreadsheetData(sheetsService).Result;
+            //// Save Database
+            //IEasyDriveDbService dbService = new EasyDriveDbServices();
+            //dbService.Add<Candidate>(Candidates.ToList());
+            //SendInvites();
+            //return View(Candidates);
         }
 
         public IActionResult DrivesDetails()
@@ -105,7 +113,9 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
 
         public IActionResult CandidateDetails(int driveId)
         {
-            return View();
+            // Read data from database
+            IEnumerable<Candidate> dbCandidates = null;
+            return View(dbCandidates);
         }
 
         public IActionResult SendInvites(int driveId) 
@@ -116,6 +126,8 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
         [HttpPost]
         public IActionResult CreateDrive(DriveDetailsViewModel driveDetailsViewModel)
         {
+            long? driveID = null;
+
             var drive = new Drive()
             {
                 Name = driveDetailsViewModel.Name,
@@ -137,6 +149,15 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
             {
                 throw ex;
             }
+
+            // Read Spreadsheet
+            SheetsService sheetsService = CreateSheetsService();
+            IEnumerable<Candidate> candidates = FetchSpreadsheetData(sheetsService, driveID.Value).Result;
+
+            // Save in Database
+            IEasyDriveDbService dbService = new EasyDriveDbServices();
+            dbService.Add<Candidate>(Candidates.ToList());
+
             // Redirect to Index
             return View(driveDetailsViewModel);
         }
@@ -171,7 +192,7 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
             return service;
         }
 
-        public async Task<IEnumerable<Candidate>> FetchSpreadsheetData(SheetsService sheetsService)
+        public async Task<IEnumerable<Candidate>> FetchSpreadsheetData(SheetsService sheetsService, long driveID)
         {
             // Define request parameters.
             String spreadsheetId = "1_T-8hgakOdeWE0xCMCYwNvDuSGvPWPb16jPic2ZvXhA";
@@ -200,7 +221,8 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
                         Email = row[6] != null ? row[6].ToString() : string.Empty,
                         Experience = row[7] != null ? Convert.ToString(row[7]) : "0",
                         NoticePeriod = row[8] != null ? Convert.ToInt16(row[8]) : 0,                        
-                        ResumeLink = row[10] != null ? row[10].ToString() : string.Empty,                        
+                        ResumeLink = row[10] != null ? row[10].ToString() : string.Empty,
+                        FK_DriveID = driveID
                     });
                 }
 
@@ -217,9 +239,10 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
 
         public IActionResult SendInvites()
         {   
-            List<Candidate> interviewDatas = RunPanelAssignementAlgo(drive, Candidates, panelDetails);
-            List<Candidate> updatedInterviewDatas = CreateCalendarEventsData(interviewDatas);
-            return View(updatedInterviewDatas);
+            List<Candidate> candidates = RunPanelAssignementAlgo(drive, Candidates, panelDetails);
+            List<Candidate> updatedCandidates = CreateCalendarEventsData(candidates);
+            // Save Database
+            return View(updatedCandidates);
         }
 
         public List<Candidate> RunPanelAssignementAlgo(Drive drive, List<Candidate> candidates, List<PanelDetail> panelDetails)

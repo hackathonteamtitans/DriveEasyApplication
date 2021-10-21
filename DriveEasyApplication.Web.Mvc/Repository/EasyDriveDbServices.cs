@@ -18,23 +18,25 @@ namespace DriveEasyApplication.Web.Mvc.Services
 
         }
 
-        public void Add<T>(T data)
+        public long? Add<T>(T data)
         {
             switch (data)
             {
                 case Candidate candidate:
-                    InsertData(DbName, "Candidate", candidate.ToDictionary());
+                    return InsertData(DbName, "Candidate", candidate.ToDictionary());
                     break;
                 case Drive drive:
-                    var result = InsertData(DbName, "Drive", drive.ToDictionary());
+                    return InsertData(DbName, "Drive", drive.ToDictionary());
                     break;
                 case Panel panel:
-                    InsertData(DbName, "Panel", panel.ToDictionary());
+                    return InsertData(DbName, "Panel", panel.ToDictionary());
                     break;
                 case PanelAvailability panelAvailability:
-                    InsertData(DbName, "PanelAvailability", panelAvailability.ToDictionary());
+                    return InsertData(DbName, "PanelAvailability", panelAvailability.ToDictionary());
                     break;
             }
+
+            return null;
         }
 
         public void Add<T>(IList<T> data)
