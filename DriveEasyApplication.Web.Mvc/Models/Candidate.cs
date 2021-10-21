@@ -18,7 +18,7 @@ namespace DriveEasyApplication.Web.Mvc.Models
             Experience = (string)dataRow["Experience"];
             NoticePeriod = Convert.ToInt32(dataRow["NoticePeriod"]);
             Source = (string)dataRow["Source"];
-            Confirmed = dataRow["Confirmed"].ToString();
+            Confirmed = (string)dataRow["Confirmed"];
             CurrentOrganization = (string)dataRow["CurrentOrganization"];
             MeetingLink = (string)dataRow["MeetingLink"];
             InterviewTime = Convert.ToDateTime(dataRow["InterviewTime"]);
