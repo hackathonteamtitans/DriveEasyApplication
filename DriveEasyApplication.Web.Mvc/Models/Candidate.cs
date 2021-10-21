@@ -21,7 +21,6 @@ namespace DriveEasyApplication.Web.Mvc.Models
             Source = (string)dataRow["Source"];
             Confirmed = (Show)dataRow["Confirmed"];
             CurrentOrganization = (string)dataRow["CurrentOrganization"];
-            DriveID = (int)dataRow["DriveID"];
             MeetingLink = (string)dataRow["MeetingLink"];
             InterviewTime = (DateTime)dataRow["InterviewTime"];
             TechnicalPanel = (string)dataRow["TechnicalPanel"];

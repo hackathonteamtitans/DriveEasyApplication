@@ -118,5 +118,20 @@ namespace DriveEasyApplication.Web.Mvc.Services
         {
             throw new NotImplementedException();
         }
+
+        public IList<T> Get<T>(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Edit<T>(T data)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Delete<T>(string id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
