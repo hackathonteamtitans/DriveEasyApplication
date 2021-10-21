@@ -19,7 +19,7 @@ namespace DriveEasyApplication.Web.Mvc.Models
             Experience = (string)dataRow["Experience"];
             NoticePeriod = (int)dataRow["NoticePeriod"];
             Source = (string)dataRow["Source"];
-            //Confirmed = (Show)dataRow["Confirmed"];
+            Confirmed = dataRow["Confirmed"].ToString();
             CurrentOrganization = (string)dataRow["CurrentOrganization"];
             MeetingLink = (string)dataRow["MeetingLink"];
             InterviewTime = (DateTime)dataRow["InterviewTime"];

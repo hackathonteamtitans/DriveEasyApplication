@@ -14,7 +14,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header clearfix">
-                <a href="@Url.Action("SendInvites","Drives")" class="btn btn-primary float-right" ><i class="fa fa-paper-plane"></i> Send Invite(s)</a>
+                <a href="@Url.Action("SendInvites","Drives", new { driveId = Model.FirstOrDefault().FK_DriveID })" class="btn btn-primary float-right" ><i class="fa fa-paper-plane"></i> Send Invite(s)</a>
             </div>
             <div class="card-body">
                 <div style="max-height: 60%; overflow: auto">

@@ -39,15 +39,15 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
         List<Candidate> Candidates = new List<Candidate>();
 
         #region hardcoded data
-        Drive drive = new Drive
-        {
-            Name = "23/10/2021 HPS Merchant Drive",
-            DriveStartTime = new DateTime(2021, 10, 23, 10, 00, 00),
-            DriveEndTime = new DateTime(2021, 10, 23, 18, 00, 00),
-            BreakStartTime = new DateTime(2021, 10, 23, 13, 00, 00),
-            BreakEndTime = new DateTime(2021, 10, 23, 14, 00, 00),
-            DriveDate = new DateTime(2021, 10, 23)
-        };
+        //Drive drive = new Drive
+        //{
+        //    Name = "23/10/2021 HPS Merchant Drive",
+        //    DriveStartTime = new DateTime(2021, 10, 23, 10, 00, 00),
+        //    DriveEndTime = new DateTime(2021, 10, 23, 18, 00, 00),
+        //    BreakStartTime = new DateTime(2021, 10, 23, 13, 00, 00),
+        //    BreakEndTime = new DateTime(2021, 10, 23, 14, 00, 00),
+        //    DriveDate = new DateTime(2021, 10, 23)
+        //};
 
         List<PanelDetail> panelDetails = new List<PanelDetail>()
             {
@@ -86,6 +86,42 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
                     Experience = "6.5",                    
                     StartTime = new DateTime(2021, 10, 23, 14, 00, 00),
                     EndTime = new DateTime(2021, 10, 23, 18, 00, 00),
+                },
+                new PanelDetail
+                {
+                    ID = 4,
+                    Name = "Abhishek Chorage",
+                    EmployeeID = "TSYS1110158",
+                    Manager = "Dattatray Misal",
+                    Department = "HPS",
+                    Title = "Software Engineer",
+                    Experience = "1.5",
+                    StartTime = new DateTime(2021, 10, 23, 10, 00, 00),
+                    EndTime = new DateTime(2021, 10, 23, 18, 00, 00),
+                },
+                new PanelDetail
+                {
+                    ID = 5,
+                    Name = "Chandan Gupta",
+                    EmployeeID = "TSYS111200",
+                    Manager = "Dattatray Misal",
+                    Department = "HPS",
+                    Title = "Senior SDET Analyst",
+                    Experience = "11",
+                    StartTime = new DateTime(2021, 10, 23, 11, 00, 00),
+                    EndTime = new DateTime(2021, 10, 23, 18, 00, 00),
+                },
+                new PanelDetail
+                {
+                    ID = 6,
+                    Name = "Vinod Patil",
+                    EmployeeID = "TSYS11125",
+                    Manager = "Dattatray Misal",
+                    Department = "HPS",
+                    Title = "SDET Analyst",
+                    Experience = "2",
+                    StartTime = new DateTime(2021, 10, 23, 10, 00, 00),
+                    EndTime = new DateTime(2021, 10, 23, 18, 00, 00),
                 }
         };
         #endregion
@@ -93,32 +129,8 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
         public IActionResult Index()
         {
             try
-            {
-                var drivesList = new List<Drive>();
-                using (EasyDriveDbServices easyDriveDbServices = new EasyDriveDbServices())
-                {
-                    var result = easyDriveDbServices.ReadTableAsList("Drive");
-                    if (result != null && result.Count > 0)
-                    {
-                        foreach (DataRow dr in result)
-                        {
-                            Drive drive = new Drive();
-                            drive.DriveID = Convert.ToInt32(dr["DriveID"]);
-                            drive.Name = (string)dr["Name"];
-                            drive.DriveDate = DateTime.ParseExact((string)dr["DriveDate"], "yyyy-MM-dd", CultureInfo.InvariantCulture);
-                            drive.Department = (string)dr["Department"];
-                            drive.Organizer = (string)dr["Organizer"];
-                            drive.Status = (string)dr["DriveStatus"];
-                            drive.DriveStatus = (int)Enum.Parse(typeof(DriveStatus), drive.Status);
-                            drive.DriveStartTime = DateTime.ParseExact((string)dr["DriveStartTime"], "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture);
-                            drive.DriveEndTime = DateTime.ParseExact((string)dr["DriveEndTime"], "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture);
-                            drive.BreakStartTime = DateTime.ParseExact((string)dr["BreakStartTime"], "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture);
-                            drive.BreakEndTime = DateTime.ParseExact((string)dr["BreakEndTime"], "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture);
-                            drivesList.Add(drive);
-                        }
-                    }
-                }
-                return View(new DriveDetailsViewModel() { Drives = drivesList});
+            {   
+                return View(GetDriveDetails());
             }
             catch(Exception ex)
             {
@@ -126,44 +138,80 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
             }
         }
 
+        public List<Drive> GetDriveDetails()
+        {
+            List<Drive> drivesList = new List<Drive>();
+            using (EasyDriveDbServices easyDriveDbServices = new EasyDriveDbServices())
+            {
+                var result = easyDriveDbServices.ReadTableAsList("Drive");
+                if (result != null && result.Count > 0)
+                {
+                    foreach (DataRow dr in result)
+                    {
+                        Drive drive = new Drive();
+                        drive.DriveID = Convert.ToInt32(dr["DriveID"]);
+                        drive.Name = (string)dr["Name"];
+                        drive.DriveDate = DateTime.ParseExact((string)dr["DriveDate"], "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                        drive.Department = (string)dr["Department"];
+                        drive.Organizer = (string)dr["Organizer"];
+                        drive.Status = (string)dr["DriveStatus"];
+                        drive.DriveStartTime = DateTime.ParseExact((string)dr["DriveStartTime"], "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture);
+                        drive.DriveEndTime = DateTime.ParseExact((string)dr["DriveEndTime"], "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture);
+                        drive.BreakStartTime = DateTime.ParseExact((string)dr["BreakStartTime"], "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture);
+                        drive.BreakEndTime = DateTime.ParseExact((string)dr["BreakEndTime"], "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture);
+                        drivesList.Add(drive);
+                    }
+                }
+            }
+
+            return View(new DriveDetailsViewModel() { Drives = drivesList });
+        }
+
+        public List<Candidate> GetCandidateDetails(string driveId)
+        {
+            List<Candidate> candidatesList = new List<Candidate>();
+            using (EasyDriveDbServices easyDriveDbServices = new EasyDriveDbServices())
+            {
+                string query = $"SELECT * FROM CANDIDATE WHERE FK_DRIVEID = {Convert.ToInt32(driveId)}";
+                var result = easyDriveDbServices.ExecuteQuerryAsList(query);
+                if (result != null && result.Count > 0)
+                {
+                    foreach (DataRow dr in result)
+                    {
+                        Candidate candidate = new Candidate();
+                        candidate.CandidateID = Convert.ToInt32(dr["CandidateID"]);
+                        candidate.Name = (string)dr["Name"];
+                        candidate.MobileNumber = (string)dr["MobileNumber"];
+                        candidate.Skills = (string)dr["Skills"];
+                        candidate.Experience = (string)dr["Experience"];
+                        candidate.NoticePeriod = Convert.ToInt32(dr["NoticePeriod"]);
+                        candidate.Source = (string)dr["Source"];
+                        candidate.Confirmed = (string)dr["Confirmed"];
+                        candidate.CurrentOrganization = (string)dr["CurrentOrganization"];
+                        candidate.MeetingLink = dr["MeetingLink"] == DBNull.Value ? string.Empty : (string)dr["MeetingLink"];
+                        candidate.FormattedInterviewTime = dr["InterviewTime"] == DBNull.Value ? string.Empty : DateTime.ParseExact((string)dr["InterviewTime"], "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture).ToLongDateString();
+                        candidate.TechnicalPanel = dr["TechnicalPanel"] == DBNull.Value ? string.Empty : (string)dr["TechnicalPanel"];
+                        candidate.TechnicalPanelFeedback = dr["TechnicalPanelFeedback"] == DBNull.Value ? string.Empty : (string)dr["TechnicalPanelFeedback"];
+                        candidate.ManagerPanel = dr["ManagerPanel"] == DBNull.Value ? string.Empty : (string)dr["ManagerPanel"];
+                        candidate.ManagerPanelFeedback = dr["ManagerPanelFeedback"] == DBNull.Value ? string.Empty : (string)dr["ManagerPanelFeedback"];
+                        candidate.HRPanel = dr["HRPanel"] == DBNull.Value ? string.Empty : (string)dr["HRPanel"];
+                        candidate.HRPanelFeedback = dr["HRPanelFeedback"] == DBNull.Value ? string.Empty : (string)dr["HRPanelFeedback"];
+                        candidate.FeedbackForm = dr["FeedbackForm"] == DBNull.Value ? string.Empty : (string)dr["FeedbackForm"];
+                        candidate.ResumeLink = (string)dr["ResumeLink"];
+                        candidate.Email = (string)dr["Email"];
+                        candidatesList.Add(candidate);
+                    }
+                }
+            }
+
+            return candidatesList;
+        }
+
         public IActionResult DrivesDetails(string driveId)
         {
             try
             {
-                List<Candidate> candidatesList = new List<Candidate>();
-                using (EasyDriveDbServices easyDriveDbServices = new EasyDriveDbServices())
-                {
-                    string query = $"SELECT * FROM CANDIDATE WHERE FK_DRIVEID = {Convert.ToInt32(driveId)}";
-                    var result = easyDriveDbServices.ExecuteQuerryAsList(query);
-                    if (result != null && result.Count > 0)
-                    {
-                        foreach (DataRow dr in result)
-                        {
-                            Candidate candidate = new Candidate();
-                            candidate.CandidateID = Convert.ToInt32(dr["CandidateID"]);
-                            candidate.Name = (string)dr["Name"];
-                            candidate.MobileNumber = (string)dr["MobileNumber"];
-                            candidate.Skills = (string)dr["Skills"];
-                            candidate.Experience = (string)dr["Experience"];
-                            candidate.NoticePeriod = Convert.ToInt32(dr["NoticePeriod"]);
-                            candidate.Source = (string)dr["Source"];
-                            candidate.Confirmed = (string)dr["Confirmed"];
-                            candidate.CurrentOrganization = (string)dr["CurrentOrganization"];
-                            candidate.MeetingLink = dr["MeetingLink"] == DBNull.Value ?  string.Empty : (string)dr["MeetingLink"];
-                            candidate.FormattedInterviewTime = dr["InterviewTime"] == DBNull.Value ? string.Empty : DateTime.ParseExact((string)dr["InterviewTime"], "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture).ToLongDateString();
-                            candidate.TechnicalPanel = dr["TechnicalPanel"] == DBNull.Value ? string.Empty : (string)dr["TechnicalPanel"];
-                            candidate.TechnicalPanelFeedback = dr["TechnicalPanelFeedback"] == DBNull.Value ? string.Empty : (string)dr["TechnicalPanelFeedback"];
-                            candidate.ManagerPanel = dr["ManagerPanel"] == DBNull.Value ? string.Empty : (string)dr["ManagerPanel"];
-                            candidate.ManagerPanelFeedback = dr["ManagerPanelFeedback"] == DBNull.Value ? string.Empty : (string)dr["ManagerPanelFeedback"];
-                            candidate.HRPanel = dr["HRPanel"] == DBNull.Value ? string.Empty : (string)dr["HRPanel"];
-                            candidate.HRPanelFeedback = dr["HRPanelFeedback"] == DBNull.Value ? string.Empty : (string)dr["HRPanelFeedback"];
-                            candidate.FeedbackForm = dr["FeedbackForm"] == DBNull.Value ? string.Empty : (string)dr["FeedbackForm"];
-                            candidate.ResumeLink = (string)dr["ResumeLink"];
-                            candidate.Email = (string)dr["Email"];
-                            candidatesList.Add(candidate);
-                        }
-                    }
-                }
+                var candidatesList= GetCandidateDetails(driveId);
                 return View(candidatesList);
             }
             catch (Exception ex)
@@ -178,12 +226,7 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
             IEnumerable<Candidate> dbCandidates = null;
             return View(dbCandidates);
         }
-
-        public IActionResult SendInvites(int driveId) 
-        {
-            return null;
-        }
-
+       
         [HttpPost]
         public IActionResult CreateDrive(DriveDetailsViewModel driveDetailsViewModel)
         {
@@ -204,7 +247,9 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
             };
             try
             {
-                var k = _easyDriveDbService.GetPanel("PanelID", "1");
+                Panel panel = _easyDriveDbService.GetPanel("PanelID", "1").First();
+                panel.Name = "TestingJAck";
+                _easyDriveDbService.Edit<Panel>(panel, "PanelID", panel.PanelID.ToString());
             }
             catch (Exception ex)
             {
@@ -298,12 +343,15 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
             return Candidates;
         }
 
-        public IActionResult SendInvites()
-        {   
-            List<Candidate> candidates = RunPanelAssignementAlgo(drive, Candidates, panelDetails);
-            List<Candidate> updatedCandidates = CreateCalendarEventsData(candidates);
-            // Save Database
-            return View(updatedCandidates);
+        public IActionResult SendInvites(string driveId)
+        {
+            long id = Convert.ToInt64(driveId);
+            var driveDetails = GetDriveDetails().Where(drive => drive.DriveID == id).FirstOrDefault();
+            var candidates = GetCandidateDetails(driveId);
+            List<Candidate> updatedCandidates = RunPanelAssignementAlgo(driveDetails, candidates, panelDetails);
+            List<Candidate> scheduledCandidates = CreateCalendarEventsData(candidates);
+            // Need to update in database
+            return RedirectToAction("DriveDetails", driveId);
         }
 
         public List<Candidate> RunPanelAssignementAlgo(Drive drive, List<Candidate> candidates, List<PanelDetail> panelDetails)
