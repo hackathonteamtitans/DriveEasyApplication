@@ -11,18 +11,17 @@ namespace DriveEasyApplication.Web.Mvc.Models
         public Candidate() { }
         public Candidate(DataRow dataRow)
         {
-            SrNo = (int)dataRow["SrNo"];
-            CandidateID = (int)dataRow["CandidateID"];
-            Name = (string)dataRow["dataRow"];
+            CandidateID = Convert.ToInt64(dataRow["CandidateID"]);
+            Name = (string)dataRow["Name"];
             MobileNumber = (string)dataRow["MobileNumber"];
             Skills = (string)dataRow["Skills"];
             Experience = (string)dataRow["Experience"];
-            NoticePeriod = (int)dataRow["NoticePeriod"];
+            NoticePeriod = Convert.ToInt32(dataRow["NoticePeriod"]);
             Source = (string)dataRow["Source"];
             Confirmed = dataRow["Confirmed"].ToString();
             CurrentOrganization = (string)dataRow["CurrentOrganization"];
             MeetingLink = (string)dataRow["MeetingLink"];
-            InterviewTime = (DateTime)dataRow["InterviewTime"];
+            InterviewTime = Convert.ToDateTime(dataRow["InterviewTime"]);
             TechnicalPanel = (string)dataRow["TechnicalPanel"];
             TechnicalPanelFeedback = (string)dataRow["TechnicalPanelFeedback"];
             ManagerPanel = (string)dataRow["ManagerPanel"];
@@ -34,8 +33,8 @@ namespace DriveEasyApplication.Web.Mvc.Models
             Email = (string)dataRow["Email"];
             CandidateStatus = Convert.ToInt32(dataRow["CandidateStatus"]);
         }
-        public int SrNo { get; set; }
-        public int CandidateID { get; set; }
+
+        public long CandidateID { get; set; }
         public string Name { get; set; }
         public string MobileNumber { get; set; }
         public string Skills { get; set; }
@@ -62,7 +61,7 @@ namespace DriveEasyApplication.Web.Mvc.Models
         public Dictionary<string, object> ToDictionary()
         {
             Dictionary<string, object> keyValuePairs = new Dictionary<string, object>();
-            keyValuePairs.Add("CandidateID", CandidateID.ToString());
+            //keyValuePairs.Add("CandidateID", CandidateID.ToString());
             keyValuePairs.Add("Name", Name);
             keyValuePairs.Add("Email", Email);
             keyValuePairs.Add("MobileNumber", MobileNumber);

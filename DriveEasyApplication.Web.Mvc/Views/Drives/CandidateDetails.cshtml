@@ -1,4 +1,5 @@
-﻿@{
+﻿@model DriveEasyApplication.Web.Mvc.Models.Candidate
+@{
     ViewData["Title"] = "Candidate Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -20,27 +21,27 @@
             <div class="card-body">
                 <div class="form-group">
                     <label for="inputName">Candidate Name</label>
-                    <input type="text" id="inputName" class="form-control" value="Sharique Nadeem">
+                    <input type="text" id="inputName" asp-for="Name" class="form-control">
                 </div>
                 <div class="form-group">
                     <label for="inputContact">Contact</label>
-                    <input type="text" id="inputContact" class="form-control" value="9011053276">
+                    <input type="text" id="inputOrganizer" asp-for="MobileNumber" class="form-control">
                 </div>
                 <div class="form-group">
                     <label for="inputEmail">Email</label>
-                    <input type="text" id="inputEmail" class="form-control" value="test@gmail.com">
+                    <input type="text" id="inputOrganizer" asp-for="Email" class="form-control">
                 </div>
                 <div class="form-group">
                     <label for="inputDescription">Skill Set</label>
-                    <textarea id="inputDescription" class="form-control" rows="4">C#, Angular, Api, Core</textarea>
+                    <input type="text" id="inputOrganizer" asp-for="Skills" class="form-control">
                 </div>
                 <div class="form-group">
                     <label for="inputSource">Source</label>
-                    <input type="text" id="inputSource" class="form-control" value="Referral">
+                    <input type="text" id="inputOrganizer" asp-for="Source" class="form-control">
                 </div>
                 <div class="form-group">
                     <label for="inputClientCompany">Company</label>
-                    <input type="text" id="inputClientCompany" class="form-control" value="Deveint Inc">
+                    <input type="text" id="inputOrganizer" asp-for="CurrentOrganization" class="form-control">
                 </div>
             </div>
             <!-- /.card-body -->
@@ -61,22 +62,15 @@
             <div class="card-body">
                 <div class="form-group">
                     <label for="inputExperience">Year of Experience</label>
-                    <input type="number" id="inputExperience" class="form-control" value="1">
+                    <input type="text" id="inputOrganizer" asp-for="Experience" class="form-control">
                 </div>
                 <div class="form-group">
                     <label for="inputNoticePeriod">Notice Period</label>
-                    <input type="number" id="inputNoticePeriod" class="form-control" value="60">
+                    <input type="text" id="inputOrganizer" asp-for="NoticePeriod" class="form-control">
                 </div>
                 <div class="form-group">
                     <label for="inputStatus">Interview Status</label>
-                    <select id="inputStatus" class="form-control custom-select">
-                        <option disabled>Select one</option>
-                        <option>No Show</option>
-                        <option>Selected</option>
-                        <option>Rejected</option>
-                        <option>In Progress</option>
-                        <option selected>Scheduled</option>
-                    </select>
+                    <select asp-for="CandidateStatus" class="form-control custom-select" asp-items="Html.GetEnumSelectList<CandidateStatus>()"></select>                    
                 </div>
             </div>
             <!-- /.card-body -->
@@ -103,7 +97,7 @@
                     <tbody>
 
                         <tr>
-                            <td>Resume.docx</td>
+                            <td><a href="@Model.ResumeLink" target="_blank">Resume Link</a></td>
                             <td class="text-right py-0 align-middle">
                                 <div class="btn-group btn-group-sm">
                                     <a href="#" class="btn btn-primary"><i class="fas fa-download"></i></a>
@@ -111,10 +105,10 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>CandidateEvaluation.docx</td>
+                            <td><a href="@Model.ResumeLink" target="_blank">CandidateEvaluation</a></td>                            
                             <td class="text-right py-0 align-middle">
                                 <div class="btn-group btn-group-sm">
-                                    <a href="~/images/Candidate_Evalaution_Form.doc" download" class="btn btn-info"><i class="fas fa-eye"></i>Sample Template</a>
+                                    <a href="~/images/Candidate Evaluation Form.docx" download" class="btn btn-info"><i class="fas fa-eye"></i>Sample Template</a>
                                     <a href="#" class="btn btn-danger"><i class="fas fa-upload"></i></a>
                                 </div>
                             </td>

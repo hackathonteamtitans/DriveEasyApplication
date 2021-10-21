@@ -13,7 +13,7 @@
 @{ 
     bool isScheduled = Model.
         Where(candidate => candidate.CandidateStatus !=
-        (int)Enum.Parse(typeof(DriveStatus), CandidateStatus.Scheduled.ToString())).ToList().Count > 0;
+        (int)Enum.Parse(typeof(DriveStatus), CandidateStatus.Unscheduled.ToString())).ToList().Count > 0;
 }
 
 <div class="row">
@@ -55,7 +55,7 @@
                             @foreach (Candidate candidate in Model)
                             {
                             <tr>
-                                <td>@candidate.Name</td>
+                                <td><a href="@Url.Action("CandidateDetails","Drives", new { candidateID = candidate.CandidateID })">@candidate.Name</a></td>                                
                                 <td>@candidate.Email</td>
                                 <td>@candidate.MobileNumber</td>
                                 <td>@candidate.Experience</td>
@@ -67,7 +67,12 @@
                                 <td>@candidate.CurrentOrganization</td>
                                 @if (isScheduled)
                                 {
-                                    <td><a href="@candidate.MeetingLink" target="_blank">Join Meeting</a></td>
+                                <td>
+                                @if (string.IsNullOrEmpty(@candidate.MeetingLink))
+                                {
+                                    <a href="@candidate.MeetingLink" target="_blank">Join Meeting</a>
+                                }
+                                </td>
                                     <td>@candidate.FormattedInterviewTime</td>
                                     <td>@candidate.TechnicalPanel</td>
                                     <td>@candidate.TechnicalPanelFeedback</td>

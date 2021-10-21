@@ -36,7 +36,6 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
         };
 
         static string ApplicationName = "Interview Drive Google Sheets";
-        List<Candidate> Candidates = new List<Candidate>();
 
         #region hardcoded data
         //Drive drive = new Drive
@@ -151,15 +150,15 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
                         Drive drive = new Drive();
                         drive.DriveID = Convert.ToInt32(dr["DriveID"]);                        
                         drive.Name = (string)dr["Name"];
-                        drive.DriveDate = DateTime.ParseExact((string)dr["DriveDate"], "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                        drive.DriveDate = Convert.ToDateTime((string)dr["DriveDate"]); 
                         drive.Department = (string)dr["Department"];
                         drive.Organizer = (string)dr["Organizer"];
                         drive.Status = (string)dr["DriveStatus"];
                         drive.DriveStatus = (int)Enum.Parse(typeof(DriveStatus), drive.Status);
-                        drive.DriveStartTime = DateTime.ParseExact((string)dr["DriveStartTime"], "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture);
-                        drive.DriveEndTime = DateTime.ParseExact((string)dr["DriveEndTime"], "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture);
-                        drive.BreakStartTime = DateTime.ParseExact((string)dr["BreakStartTime"], "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture);
-                        drive.BreakEndTime = DateTime.ParseExact((string)dr["BreakEndTime"], "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture);
+                        drive.DriveStartTime = Convert.ToDateTime((string)dr["DriveStartTime"]);
+                        drive.DriveEndTime = Convert.ToDateTime((string)dr["DriveEndTime"]);
+                        drive.BreakStartTime = Convert.ToDateTime((string)dr["BreakStartTime"]);
+                        drive.BreakEndTime = Convert.ToDateTime((string)dr["BreakEndTime"]);
                         drivesList.Add(drive);
                     }
                 }
@@ -202,8 +201,8 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
                             candidate.HRPanelFeedback = dr["HRPanelFeedback"] == DBNull.Value ? string.Empty : (string)dr["HRPanelFeedback"];
                             candidate.FeedbackForm = dr["FeedbackForm"] == DBNull.Value ? string.Empty : (string)dr["FeedbackForm"];
                             candidate.ResumeLink = (string)dr["ResumeLink"];
-                            candidate.Email = (string)dr["Email"];                            
-                            candidate.CandidateStatus = Convert.ToInt32(candidate.CandidateStatus);
+                            candidate.Email = (string)dr["Email"];
+                            candidate.CandidateStatus = Convert.ToInt32(dr["CandidateStatus"]);
                             candidatesList.Add(candidate);
                         }
                     }
@@ -230,10 +229,10 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
             }
         }
 
-        public IActionResult CandidateDetails(int driveId)
+        public IActionResult CandidateDetails(int candidateId)
         {
             // Read data from database
-            IEnumerable<Candidate> dbCandidates = null;
+            Candidate dbCandidates = _easyDriveDbService.GetCandidate("CandidateID", candidateId.ToString()).FirstOrDefault(); ;
             return View(dbCandidates);
         }
        
@@ -257,9 +256,7 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
             };
             try
             {
-                Panel panel = _easyDriveDbService.GetPanel("PanelID", "1").First();
-                panel.Name = "TestingJAck";
-                _easyDriveDbService.Edit<Panel>(panel, "PanelID", panel.PanelID.ToString());
+                driveID = _easyDriveDbService.Add<Drive>(drive);
             }
             catch (Exception ex)
             {
@@ -272,10 +269,10 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
 
             // Save in Database
             IEasyDriveDbService dbService = new EasyDriveDbServices();
-            dbService.Add<Candidate>(Candidates.ToList());
+            dbService.Add<Candidate>(candidates.ToList());
 
             // Redirect to Index
-            return View(driveDetailsViewModel);
+            return RedirectToAction("Index");
         }
 
         private SheetsService CreateSheetsService()
@@ -310,6 +307,7 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
 
         public async Task<IEnumerable<Candidate>> FetchSpreadsheetData(SheetsService sheetsService, long driveID)
         {
+            List<Candidate> Candidates = new List<Candidate>();
             // Define request parameters.
             String spreadsheetId = "1_T-8hgakOdeWE0xCMCYwNvDuSGvPWPb16jPic2ZvXhA";
             String range = "Drive!A2:K";
@@ -329,10 +327,11 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
                     // Print columns
                     data.Add(new Candidate
                     {
-                        CandidateID = row[0] != null ? Convert.ToInt16(row[0]) : 0,
+                        //CandidateID = row[0] != null ? Convert.ToInt16(row[0]) : 0,
                         Name = row[1] != null ? row[1].ToString() : string.Empty,
                         Skills = row[2] != null ? row[2].ToString() : null,
                         Source = row[3] != null ? row[3].ToString() : string.Empty,
+                        Confirmed = row[4] != null ? row[4].ToString() : "No",
                         MobileNumber = row[5] != null ? row[5].ToString() : string.Empty,
                         Email = row[6] != null ? row[6].ToString() : string.Empty,
                         Experience = row[7] != null ? Convert.ToString(row[7]) : "0",
@@ -368,13 +367,13 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
                 _easyDriveDbService.Edit<Candidate>(candidate, "CandidateID", candidate.CandidateID.ToString());
             }
 
-            return RedirectToAction("DrivesDetails", driveId);
+            return RedirectToAction("DrivesDetails", "Drives", new { driveId = driveId });
         }
 
         public List<Candidate> RunPanelAssignementAlgo(Drive drive, List<Candidate> candidates, List<PanelDetail> panelDetails)
         {
             int maxInterviews = candidates.Count / panelDetails.Count;
-            List<int> SrNos = new List<int>();
+            List<long> candidateIDs = new List<long>();
             TimeSpan interviewTime = new TimeSpan(01, 00, 00);
             List<Candidate> updateInterviewDatas = new List<Candidate>();
             foreach (PanelDetail panelDetail in panelDetails)
@@ -389,13 +388,13 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
                     if ((panelDetail.StartTime <= currentInterviewStart.Value && panelDetail.EndTime >= currentInterviewEnd.Value) &&
                        ((currentInterviewStart.Value < drive.BreakStartTime && currentInterviewEnd.Value <= drive.BreakEndTime) || currentInterviewStart.Value >= drive.BreakEndTime))
                     {
-                        foreach (Candidate candidate in candidates.Where(data => !SrNos.Contains(data.CandidateID)))
+                        foreach (Candidate candidate in candidates.Where(data => !candidateIDs.Contains(data.CandidateID)))
                         {
                             if (Convert.ToDecimal(candidate.Experience) <= Convert.ToDecimal(panelDetail.Experience))
                             {
                                 candidate.TechnicalPanel = panelDetail.Name;
                                 candidate.InterviewTime = currentInterviewStart.Value;
-                                SrNos.Add(candidate.CandidateID);
+                                candidateIDs.Add(candidate.CandidateID);
                                 updateInterviewDatas.Add(candidate);
                                 interviewsAssigned++;
                                 break;

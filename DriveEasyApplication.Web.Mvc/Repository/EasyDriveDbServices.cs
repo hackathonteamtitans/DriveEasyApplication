@@ -124,7 +124,14 @@ namespace DriveEasyApplication.Web.Mvc.Services
 
         public List<Candidate> GetCandidate(string colName, object value)
         {
-            throw new NotImplementedException();
+            List<Candidate> candidates = new List<Candidate>();
+            DataTable dataTable = ExecuteQuerry($"Select * from Candidate where {colName} = '{value}'");
+
+            foreach (DataRow row in dataTable.Rows)
+            {
+                candidates.Add(new Candidate(row));
+            }
+            return candidates;
         }
 
         public void Delete<T>(string id)
