@@ -130,7 +130,7 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
         {
             try
             {   
-                return View(GetDriveDetails());
+                return View(new DriveDetailsViewModel() { Drives = GetDriveDetails() });
             }
             catch(Exception ex)
             {
@@ -155,6 +155,7 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
                         drive.Department = (string)dr["Department"];
                         drive.Organizer = (string)dr["Organizer"];
                         drive.Status = (string)dr["DriveStatus"];
+                        drive.DriveStatus = (int)Enum.Parse(typeof(DriveStatus), drive.Status);
                         drive.DriveStartTime = DateTime.ParseExact((string)dr["DriveStartTime"], "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture);
                         drive.DriveEndTime = DateTime.ParseExact((string)dr["DriveEndTime"], "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture);
                         drive.BreakStartTime = DateTime.ParseExact((string)dr["BreakStartTime"], "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture);
@@ -164,7 +165,7 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
                 }
             }
 
-            return View(new DriveDetailsViewModel() { Drives = drivesList });
+            return drivesList;
         }
 
         public List<Candidate> GetCandidateDetails(string driveId)
