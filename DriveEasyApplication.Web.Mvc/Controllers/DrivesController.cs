@@ -383,8 +383,9 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
             // Need to update in database
             foreach (var candidate in scheduledCandidates)
             {
-                candidate.CandidateStatus = (int)Enum.Parse(typeof(CandidateStatus), CandidateStatus.Scheduled.ToString()); 
+                candidate.CandidateStatus = (int)Enum.Parse(typeof(CandidateStatus), CandidateStatus.Scheduled.ToString());
                 _easyDriveDbService.Edit<Candidate>(candidate, "CandidateID", candidate.CandidateID.ToString());
+                //break; // Need to remove later
             }
 
             return RedirectToAction("DrivesDetails", "Drives", new { driveId = driveId });
@@ -497,6 +498,16 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
             body.Start = start;
             body.End = end;
 
+            // Attach Candidate Resume with Email and Event
+            EventAttachment attachment = new EventAttachment();
+            attachment.Title = "Candidate resume";
+            attachment.FileUrl = candidate.ResumeLink;
+            attachment.MimeType = "application/vnd.google-apps.document";
+            
+            body.Attachments = new List<EventAttachment>();
+            body.Attachments.Add(attachment);            
+
+            // Generate Google meet
             body.ConferenceData = new ConferenceData
             {
                 CreateRequest = new CreateConferenceRequest
@@ -513,10 +524,12 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
             body.Summary = "Invitation to interview – TSYS / Interview with " + candidate.TechnicalPanel;
             body.Description = GetEventDescription(candidate);
             EventsResource.InsertRequest request = new EventsResource.InsertRequest(_service, body, "hackathonteamtitansprod@gmail.com");
+            request.SupportsAttachments = true;
             request.ConferenceDataVersion = 1;
+            request.SendNotifications = true;
             Event response = request.Execute();
-            candidate.MeetingLink = response.HangoutLink;
 
+            candidate.MeetingLink = response.HangoutLink;
             return candidate;
         }
 
@@ -525,16 +538,19 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
             StringBuilder sb = new StringBuilder();
             sb.Append("Hi " + candidate.Name + ",");
             sb.AppendLine();
+            sb.AppendLine();
             sb.Append("Thank you for applying to TSYS.");
             sb.AppendLine();
             sb.Append("We would like to invite you for an interview at our office[s] to get to know you a bit better.");
             sb.AppendLine();
-            sb.Append("You will meet with " + candidate.TechnicalPanel + ". The interview will last about 60 minutes and you’ll have the chance to discuss the [Job_title] position and learn more about our company.");
+            sb.Append("You will meet with " + candidate.TechnicalPanel + ". The interview will last about 60 minutes and you’ll have the chance to discuss the position and learn more about our company.");
             sb.AppendLine();
             sb.Append("Looking forward to hearing from you,");
             sb.AppendLine();
-            sb.Append("All the best / Kind regards,");
+            sb.Append("All the best");
             sb.AppendLine();
+            sb.AppendLine();
+            sb.Append("Kind regards,");
             sb.AppendLine();
             sb.Append("HR");
 
