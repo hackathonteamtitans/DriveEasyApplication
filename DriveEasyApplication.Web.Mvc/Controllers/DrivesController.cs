@@ -58,9 +58,9 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
                     Manager = "Dattatray Misal",
                     Department = "HPS",
                     Title = "Senior Software Engineer",
-                    Experience = "7.5",                    
+                    Experience = "7.5",
                     StartTime = new DateTime(2021, 10, 23, 11, 00, 00),
-                    EndTime = new DateTime(2021, 10, 23, 16, 00, 00),                    
+                    EndTime = new DateTime(2021, 10, 23, 16, 00, 00),
                 },
                 new PanelDetail
                 {
@@ -70,9 +70,9 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
                     Manager = "Dattatray Misal",
                     Department = "HPS",
                     Title = "Senior Software Engineer",
-                    Experience = "7",                    
+                    Experience = "7",
                     StartTime = new DateTime(2021, 10, 23, 10, 00, 00),
-                    EndTime = new DateTime(2021, 10, 23, 13, 00, 00),                    
+                    EndTime = new DateTime(2021, 10, 23, 13, 00, 00),
                 },
                 new PanelDetail
                 {
@@ -82,7 +82,7 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
                     Manager = "Dattatray Misal",
                     Department = "HPS",
                     Title = "Senior SDET Analyst",
-                    Experience = "6.5",                    
+                    Experience = "6.5",
                     StartTime = new DateTime(2021, 10, 23, 14, 00, 00),
                     EndTime = new DateTime(2021, 10, 23, 18, 00, 00),
                 },
@@ -201,7 +201,7 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
                             candidate.Confirmed = (string)dr["Confirmed"];
                             candidate.CurrentOrganization = (string)dr["CurrentOrganization"];
                             candidate.MeetingLink = dr["MeetingLink"] == DBNull.Value ? string.Empty : (string)dr["MeetingLink"];
-                            candidate.FormattedInterviewTime = dr["InterviewTime"] == DBNull.Value || dr["InterviewTime"].ToString().Trim() == "" ? string.Empty : DateTime.ParseExact((string)dr["InterviewTime"], "MM/dd/yyyy HH:mm:ss tt", CultureInfo.InvariantCulture).ToString("dd/MM/yyyy hh:mm tt");
+                            candidate.FormattedInterviewTime = dr["InterviewTime"] == DBNull.Value || dr["InterviewTime"].ToString().Trim() == "" ? string.Empty : DateTime.ParseExact((string)dr["InterviewTime"], "MM/dd/yyyy h:mm:ss tt", CultureInfo.InvariantCulture).ToString("dd/MM/yyyy hh:mm tt");
                             candidate.TechnicalPanel = dr["TechnicalPanel"] == DBNull.Value ? string.Empty : (string)dr["TechnicalPanel"];
                             candidate.TechnicalPanelFeedback = dr["TechnicalPanelFeedback"] == DBNull.Value ? string.Empty : (string)dr["TechnicalPanelFeedback"];
                             candidate.ManagerPanel = dr["ManagerPanel"] == DBNull.Value ? string.Empty : (string)dr["ManagerPanel"];
@@ -327,7 +327,16 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
             // Prints the names and majors of students in a sample spreadsheet:
             // https://docs.google.com/spreadsheets/d/1_T-8hgakOdeWE0xCMCYwNvDuSGvPWPb16jPic2ZvXhA/edit
             // https://docs.google.com/spreadsheets/d/1dxIixDj9ypI3U39OLBSN4JnEHzhTxd3b90IwtO92DsI/edit
-            ValueRange response = request.Execute();
+            ValueRange response = null;
+            try
+            {
+                response = request.Execute();
+            }
+            catch (Exception ex)
+            {
+
+            }
+            
             IList<IList<Object>> values = response.Values;
             List<Candidate> data = new List<Candidate>();
             CultureInfo culture = new CultureInfo("en-US");
