@@ -59,8 +59,8 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
                     Department = "HPS",
                     Title = "Senior Software Engineer",
                     Experience = "7.5",
-                    StartTime = new DateTime(2021, 10, 23, 11, 00, 00),
-                    EndTime = new DateTime(2021, 10, 23, 16, 00, 00),
+                    StartTime = new DateTime(2021, 10, 30, 9, 00, 00),
+                    EndTime = new DateTime(2021, 10, 30, 16, 00, 00),
                 },
                 new PanelDetail
                 {
@@ -71,8 +71,8 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
                     Department = "HPS",
                     Title = "Senior Software Engineer",
                     Experience = "7",
-                    StartTime = new DateTime(2021, 10, 23, 10, 00, 00),
-                    EndTime = new DateTime(2021, 10, 23, 13, 00, 00),
+                    StartTime = new DateTime(2021, 10, 30, 9, 00, 00),
+                    EndTime = new DateTime(2021, 10, 30, 13, 00, 00),
                 },
                 new PanelDetail
                 {
@@ -83,8 +83,8 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
                     Department = "HPS",
                     Title = "Senior SDET Analyst",
                     Experience = "6.5",
-                    StartTime = new DateTime(2021, 10, 23, 14, 00, 00),
-                    EndTime = new DateTime(2021, 10, 23, 18, 00, 00),
+                    StartTime = new DateTime(2021, 10, 30, 9, 00, 00),
+                    EndTime = new DateTime(2021, 10, 30, 18, 00, 00),
                 },
                 new PanelDetail
                 {
@@ -95,8 +95,8 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
                     Department = "HPS",
                     Title = "Software Engineer",
                     Experience = "1.5",
-                    StartTime = new DateTime(2021, 10, 23, 10, 00, 00),
-                    EndTime = new DateTime(2021, 10, 23, 18, 00, 00),
+                    StartTime = new DateTime(2021, 10, 30, 9, 00, 00),
+                    EndTime = new DateTime(2021, 10, 30, 18, 00, 00),
                 },
                 new PanelDetail
                 {
@@ -107,8 +107,8 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
                     Department = "HPS",
                     Title = "Senior SDET Analyst",
                     Experience = "11",
-                    StartTime = new DateTime(2021, 10, 23, 11, 00, 00),
-                    EndTime = new DateTime(2021, 10, 23, 18, 00, 00),
+                    StartTime = new DateTime(2021, 10, 30, 9, 00, 00),
+                    EndTime = new DateTime(2021, 10, 30, 18, 00, 00),
                 },
                 new PanelDetail
                 {
@@ -119,8 +119,8 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
                     Department = "HPS",
                     Title = "SDET Analyst",
                     Experience = "2",
-                    StartTime = new DateTime(2021, 10, 23, 10, 00, 00),
-                    EndTime = new DateTime(2021, 10, 23, 18, 00, 00),
+                    StartTime = new DateTime(2021, 10, 30, 9, 00, 00),
+                    EndTime = new DateTime(2021, 10, 30, 18, 00, 00),
                 }
         };
         #endregion
@@ -393,18 +393,18 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
 
         public List<Candidate> RunPanelAssignementAlgo(Drive drive, List<Candidate> candidates, List<PanelDetail> panelDetails)
         {
-            int maxInterviews = candidates.Count / panelDetails.Count;
+            //int maxInterviews = candidates.Count / panelDetails.Count;
             List<long> candidateIDs = new List<long>();
             TimeSpan interviewTime = new TimeSpan(01, 00, 00);
             List<Candidate> updateInterviewDatas = new List<Candidate>();
-            foreach (PanelDetail panelDetail in panelDetails)
+
+            DateTime? currentInterviewEnd, currentInterviewStart = null;
+            if (!currentInterviewStart.HasValue)
+                currentInterviewStart = drive.DriveStartTime;
+            currentInterviewEnd = currentInterviewStart + interviewTime;
+            while (currentInterviewEnd.Value <= drive.DriveEndTime)
             {
-                int interviewsAssigned = 0;
-                DateTime? currentInterviewEnd, currentInterviewStart = null;
-                if (!currentInterviewStart.HasValue)
-                    currentInterviewStart = drive.DriveStartTime;
-                currentInterviewEnd = currentInterviewStart + interviewTime;
-                while (currentInterviewEnd.Value <= drive.DriveEndTime && interviewsAssigned <= maxInterviews)
+                foreach (PanelDetail panelDetail in panelDetails)
                 {
                     if ((panelDetail.StartTime <= currentInterviewStart.Value && panelDetail.EndTime >= currentInterviewEnd.Value) &&
                        ((currentInterviewStart.Value < drive.BreakStartTime && currentInterviewEnd.Value <= drive.BreakEndTime) || currentInterviewStart.Value >= drive.BreakEndTime))
@@ -417,14 +417,14 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
                                 candidate.InterviewTime = currentInterviewStart.Value;
                                 candidateIDs.Add(candidate.CandidateID);
                                 updateInterviewDatas.Add(candidate);
-                                interviewsAssigned++;
                                 break;
                             }
                         }
-                    }
-                    currentInterviewStart = currentInterviewEnd;
-                    currentInterviewEnd = currentInterviewStart + interviewTime;
+                    }                    
                 }
+
+                currentInterviewStart = currentInterviewEnd;
+                currentInterviewEnd = currentInterviewStart + interviewTime;
             }
 
             return updateInterviewDatas;
@@ -498,14 +498,20 @@ namespace DriveEasyApplication.Web.Mvc.Controllers
             body.Start = start;
             body.End = end;
 
+            body.Attachments = new List<EventAttachment>();
+
             // Attach Candidate Resume with Email and Event
             EventAttachment attachment = new EventAttachment();
             attachment.Title = "Candidate resume";
             attachment.FileUrl = candidate.ResumeLink;
             attachment.MimeType = "application/vnd.google-apps.document";
-            
-            body.Attachments = new List<EventAttachment>();
-            body.Attachments.Add(attachment);            
+            body.Attachments.Add(attachment);
+
+            attachment = new EventAttachment();
+            attachment.Title = "TSYS A Global Payments Company";
+            attachment.FileUrl = "https://drive.google.com/file/d/1sOe9XVHrkuUS-SNajOIqfDAcjT0MkWKX/view?usp=sharing";
+            attachment.MimeType = "application/vnd.google-apps.document";
+            body.Attachments.Add(attachment);
 
             // Generate Google meet
             body.ConferenceData = new ConferenceData
